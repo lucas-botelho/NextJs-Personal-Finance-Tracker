@@ -1,8 +1,6 @@
 import SideNav from "./components/navigation/sideNav";
 import Topbar from "./components/layout/topbar";
 import MainContainer from "./components/layout/mainContainer";
-import SidebarIcon from "./components/navigation/sidebarIcon";
-import { FaEuroSign } from "react-icons/fa";
 
 export default function Home() {
   return (
