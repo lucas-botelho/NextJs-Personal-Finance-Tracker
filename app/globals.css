@@ -2,32 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer components {
+  .sidebar-icon {
+    @apply relative flex items-center justify-center w-12 h-12 mt-2 mb-2 mx-auto shadow-lg bg-gray-discord-700 text-gray-500 hover:bg-green-800 hover:text-white rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+  .header-container{
+    @apply flex flex-1
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .main-container{
+    @apply flex h-screen
+  }
+
+  .sideNav{
+    @apply flex top-0 left-0 w-16 m-0
+    flex-col
+    bg-blue-custom-900 text-white shadow-lg z-50;
+  }
+
+  .topBar{
+    @apply w-screen h-6 flex-row
+    bg-blue-custom-900 shadow-lg z-50;
+  }
+
+  .content-container{
+    @apply flex-1 rounded-xl px-5 py-5 mb-3 mr-3 bg-gray-custom-100
+  }
+
+
+
+  body {
+    @apply bg-blue-custom-900
   }
 }
