@@ -1,11 +1,23 @@
 'use client'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebase/clientApp';
+
+
 export default function Login() {
 
     const handleGoogleAuth = () => {
         const authProvider = new GoogleAuthProvider();
-        return signInWithPopup(auth, authProvider)
+        signInWithPopup(auth, authProvider).then((result) => {
+            // This gives you a Google Access Token. You can use it to access Google APIs.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential?.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            console.log(user);
+            if (user) {
+                window.location.href = '/';
+            }
+        })
     };
 
     return (

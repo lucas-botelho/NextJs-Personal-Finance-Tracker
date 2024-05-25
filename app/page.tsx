@@ -3,6 +3,7 @@ import Topbar from "./components/layout/topbar";
 import MainContainer from "./components/layout/mainContainer";
 
 export default function Home() {
+
   return (
     <>
       <div className="header-container">
