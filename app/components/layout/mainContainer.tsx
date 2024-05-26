@@ -8,7 +8,9 @@ type MainContainerProps = {
 const MainContainer: React.FC<MainContainerProps> = ({ children }) => {
     return (
         <div className="content-container">
-            {children}
+            <div className="flex flex-col">
+                {children}
+            </div>
         </div>
     );
 };

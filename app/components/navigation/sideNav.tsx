@@ -1,6 +1,9 @@
 import React from 'react';
-import { FaEuroSign } from "react-icons/fa";
+import { FaCircleDollarToSlot, FaHandHoldingDollar } from "react-icons/fa6";
+import { GiPiggyBank } from "react-icons/gi";
+
 import SidebarIcon from './sidebarIcon';
+
 
 interface Props {
     // Define your component props here
@@ -9,7 +12,10 @@ interface Props {
 const SideNav: React.FC<Props> = () => {
     return <>
         <div className='sideNav'>
-            <SidebarIcon icon={<FaEuroSign size={28} />} />
+            <SidebarIcon isPositive={true} icon={<FaCircleDollarToSlot size={28} />} />
+            <SidebarIcon isPositive={false} icon={<FaHandHoldingDollar size={28} />} />
+            <SidebarIcon isPositive={true} icon={<GiPiggyBank size={28} />} />
+            <SidebarIcon isPositive={false} icon={<GiPiggyBank size={28} />} />
         </div>
     </>
 };

@@ -5,6 +5,8 @@ import MainContainer from "../components/layout/mainContainer";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/clientApp";
 import { redirect } from "next/navigation";
+import CashDisplay from "../components/information/cashDisplay";
+import MainContainerHeader from "../components/layout/mainContainerHeader";
 
 export default function Dashboard() {
 
@@ -22,9 +24,12 @@ export default function Dashboard() {
             <div className="main-container">
                 <SideNav />
                 <MainContainer>
-                    <div className="flex flex-col">
-                        <p className="text-lg">This is a simple layout with a topbar, sidebar, and main container.</p>
-                    </div>
+                    <MainContainerHeader>
+                        <CashDisplay title="Income" cash={100} />
+                        <CashDisplay title="Expenses" cash={100} />
+                        <CashDisplay title="Savings" cash={100} />
+                    </MainContainerHeader>
+
                 </MainContainer>
             </div>
 
