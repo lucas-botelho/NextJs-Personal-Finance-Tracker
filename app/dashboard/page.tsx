@@ -6,7 +6,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/clientApp";
 import { redirect } from "next/navigation";
 import CashDisplay from "../components/information/cashDisplay";
-import MainContainerHeader from "../components/layout/mainContainerHeader";
+import MainContainerContent from "../components/layout/mainContainerContent";
+import ExpenseColumn from "../components/information/expenseColumn";
 
 export default function Dashboard() {
 
@@ -24,11 +25,17 @@ export default function Dashboard() {
             <div className="main-container">
                 <SideNav />
                 <MainContainer>
-                    <MainContainerHeader>
+                    <MainContainerContent>
                         <CashDisplay title="Income" cash={100} />
                         <CashDisplay title="Expenses" cash={100} />
                         <CashDisplay title="Savings" cash={100} />
-                    </MainContainerHeader>
+                    </MainContainerContent>
+                    <div className='flex flex-col border-solid pb-1 pl-1 pr-1 mb-6 md:flex-row'>
+                        <ExpenseColumn title="Mandatory" />
+                        <ExpenseColumn title="Necessities" />
+                        <ExpenseColumn title="Wants" />
+                    </div>
+
 
                 </MainContainer>
             </div>

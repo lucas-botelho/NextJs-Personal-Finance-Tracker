@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 
-interface MainContainerHeaderProps {
+interface MainContainerContentProps {
     children: ReactNode;
 }
 
-const MainContainerHeader: React.FC<MainContainerHeaderProps> = ({ children }) => {
+const MainContainerContent: React.FC<MainContainerContentProps> = ({ children }) => {
     return (
         <div className='main-container-header'>
             {children}
@@ -12,4 +12,4 @@ const MainContainerHeader: React.FC<MainContainerHeaderProps> = ({ children }) =
     );
 };
 
-export default MainContainerHeader;
+export default MainContainerContent;
