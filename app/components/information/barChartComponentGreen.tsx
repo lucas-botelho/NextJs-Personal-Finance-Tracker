@@ -57,6 +57,7 @@ const data = [
         pv: 1398,
         amt: 2210,
     },
+
     {
         name: 'October',
         pv: 1200,
