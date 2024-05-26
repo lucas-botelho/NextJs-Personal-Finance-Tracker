@@ -30,7 +30,7 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title }) => {
     };
 
     return (
-        <div className='expense-column h-full w-full md:mb-5'>
+        <div className='expense-column h-full w-full'>
             <h2 className='text-2xl font-bold mb-2'>{title}</h2>
             <span className='border-solid border-t-2 w-64 m-2'></span>
             <ul className='space-y-2'>

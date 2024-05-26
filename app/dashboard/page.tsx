@@ -8,6 +8,8 @@ import { redirect } from "next/navigation";
 import CashDisplay from "../components/information/cashDisplay";
 import MainContainerContent from "../components/layout/mainContainerContent";
 import ExpenseColumn from "../components/information/expenseColumn";
+import { BarChart } from "recharts";
+import BarChartCard from "../components/information/barChartCard";
 
 export default function Dashboard() {
 
@@ -35,8 +37,11 @@ export default function Dashboard() {
                         <ExpenseColumn title="Necessities" />
                         <ExpenseColumn title="Wants" />
                     </div>
-
-
+                    <div className='flex flex-col border-solid pb-1 pl-1 pr-1 mb-6 md:flex-row'>
+                        <BarChartCard title="Earning" />
+                        <BarChartCard title="Expenses" />
+                        <BarChartCard title="Savings" />
+                    </div>
                 </MainContainer>
             </div>
 

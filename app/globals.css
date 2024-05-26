@@ -44,7 +44,7 @@
   }
 
   .expense-column{
-    @apply flex flex-1 items-center flex-col p-2 rounded-xl bg-white shadow-lg mx-2 h-96
+    @apply flex flex-1 items-center flex-col p-2 rounded-xl bg-white shadow-lg mx-2 h-96 mb-5
 
   }
 
