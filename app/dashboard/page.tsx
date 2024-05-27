@@ -8,8 +8,8 @@ import { redirect } from "next/navigation";
 import CashDisplay from "../components/information/cashDisplay";
 import MainContainerContent from "../components/layout/mainContainerContent";
 import ExpenseColumn from "../components/information/expenseColumn";
-import { BarChart } from "recharts";
 import BarChartCard from "../components/information/barChartCard";
+import TransactionModal from "../components/modal/transactionModal";
 
 export default function Dashboard() {
 
@@ -43,6 +43,8 @@ export default function Dashboard() {
                         <BarChartCard title="Savings" />
                     </div>
                 </MainContainer>
+
+                <TransactionModal></TransactionModal>
             </div>
 
         </>);

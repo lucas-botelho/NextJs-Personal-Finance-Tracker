@@ -51,8 +51,4 @@
   .cash-display p{
     @apply text-sm font-bold
   }
-
-  body {
-    @apply bg-blue-custom-900
-  }
 }
