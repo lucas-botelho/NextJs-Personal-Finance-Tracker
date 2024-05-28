@@ -2,22 +2,19 @@
 import SideNav from "../components/navigation/sideNav";
 import Topbar from "../components/layout/topbar";
 import MainContainer from "../components/layout/mainContainer";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/clientApp";
-import { redirect } from "next/navigation";
 import CashDisplay from "../components/information/cashDisplay";
 import MainContainerContent from "../components/layout/mainContainerContent";
 import ExpenseColumn from "../components/information/expenseColumn";
 import BarChartCard from "../components/information/barChartCard";
 import TransactionModal from "../components/modal/transactionModal";
 
-export default function Dashboard() {
+interface DashboardProps {
+    userId: string;
+}
 
-    const [user, loading, error] = useAuthState(auth);
+export default function Dashboard({ userId }: DashboardProps) {
 
-    if (user === null) {
-        redirect('/');
-    }
+    console.log(userId);
 
     return (
         <>
