@@ -1,14 +1,15 @@
 import { cookies } from 'next/headers';
 import Dashboard from './dashboard/dashboard';
-import Login from './components/auth/login';
-
+import { redirect } from 'next/navigation'
 export default function AppPage() {
   const uID = cookies().get('user')?.value;
 
+  if (uID === undefined) {
+    redirect('/auth');
+  }
+
   return (<>
-    {
-      uID !== undefined ? <Dashboard userId={uID} /> : <Login />
-    }
+    <Dashboard userId={uID} />
   </>
 
   );

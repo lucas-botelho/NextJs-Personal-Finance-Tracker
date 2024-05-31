@@ -2,7 +2,7 @@
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useCookies } from 'next-client-cookies';
 import { auth } from '@/firebase/clientApp';
-import Dashboard from '@/app/dashboard/dashboard';
+import { redirect } from 'next/navigation';
 
 
 interface LoginProps {
@@ -20,7 +20,10 @@ const Login: React.FC<LoginProps> = () => {
     }
     if (user) {
         cookies.set('user', user.user.uid);
-        return (<Dashboard userId={user.user.uid} />)
+        redirect('/');
+    }
+    if (cookies.get('user') !== undefined) {
+        redirect('/');
     }
 
     return (

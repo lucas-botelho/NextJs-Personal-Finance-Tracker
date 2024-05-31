@@ -13,9 +13,6 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ userId }: DashboardProps) {
-
-    console.log(userId);
-
     return (
         <>
             <div className="header-container">

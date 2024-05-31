@@ -3,12 +3,12 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClientChakraProvider } from './clientChakraProvider'
 import { ClientRecoildRoot } from "./clientRecoildRoot";
+import { CookiesProvider } from "next-client-cookies/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Next - Pf",
-  description: "lbotelho's personal website",
 };
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
@@ -17,7 +17,9 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
       <body className="bg-blue-custom-900">
         <ClientRecoildRoot>
           <ClientChakraProvider>
-            {children}
+            <CookiesProvider>
+              {children}
+            </CookiesProvider>
           </ClientChakraProvider>
         </ClientRecoildRoot>
       </body>
