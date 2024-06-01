@@ -51,4 +51,28 @@
   .cash-display p{
     @apply text-sm font-bold
   }
+
+  div.modal-field{
+    display:grid;
+    grid-template-columns: max-content max-content;
+    grid-gap:5px;
+    align-items: center;
+  }
+
+  div.modal-field label{
+    text-align: left;
+  }
+
+  div.modal-field label{
+    @apply block text-lg font-medium text-gray-900
+  }
+
+  div.modal-field input{
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+  }
+
+  div.modal-field label:after{
+    content: ":";
+  }
+
 }
