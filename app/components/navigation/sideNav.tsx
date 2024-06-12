@@ -12,16 +12,22 @@ interface Props {
 }
 
 const SideNav: React.FC<Props> = () => {
-    const setAuthModalState = useSetRecoilState(transactionModalState);
+    const setIncomeModalState = useSetRecoilState(transactionModalState);
 
     return <>
         <div className='sideNav'>
-            <div onClick={() => setAuthModalState({ open: true, view: 'income' })}>
+            <div onClick={() => setIncomeModalState({ open: true, view: 'income' })}>
                 <SidebarIcon isPositive={true} icon={<FaCircleDollarToSlot size={28} />} />
             </div>
-            <SidebarIcon isPositive={false} icon={<FaHandHoldingDollar size={28} />} />
-            <SidebarIcon isPositive={true} icon={<GiPiggyBank size={28} />} />
-            <SidebarIcon isPositive={false} icon={<GiPiggyBank size={28} />} />
+            <div onClick={() => setIncomeModalState({ open: true, view: 'expense' })}>
+                <SidebarIcon isPositive={false} icon={<FaHandHoldingDollar size={28} />} />
+            </div>
+            <div onClick={() => setIncomeModalState({ open: true, view: 'savingIn' })}>
+                <SidebarIcon isPositive={true} icon={<GiPiggyBank size={28} />} />
+            </div>
+            <div onClick={() => setIncomeModalState({ open: true, view: 'savingOut' })}>
+                <SidebarIcon isPositive={false} icon={<GiPiggyBank size={28} />} />
+            </div>
         </div>
     </>
 };

@@ -7,12 +7,25 @@ import MainContainerContent from "../components/layout/mainContainerContent";
 import ExpenseColumn from "../components/information/expenseColumn";
 import BarChartCard from "../components/information/barChartCard";
 import TransactionModal from "../components/modal/transactionModal";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { monthlyTransactionsAtom } from "../atoms/monthlyTransactionsAtom";
+import { query, where } from "firebase/firestore";
 
 interface DashboardProps {
-    userId: string;
 }
 
-export default function Dashboard({ userId }: DashboardProps) {
+export default function Dashboard({ }: DashboardProps) {
+    // const setMonthlyIncomeState = useSetRecoilState(monthlyTransactionsAtom);
+    const [incomeAmount, setIncomeAmount] = useRecoilState(monthlyTransactionsAtom)
+
+    const getIncome = () => {
+        // setModalState(prev => ({ ...prev, open: false }))
+
+        return fetch('/api/get-month-income')
+            .then(response => response.json())
+    }
+
+
     return (
         <>
             <div className="header-container">

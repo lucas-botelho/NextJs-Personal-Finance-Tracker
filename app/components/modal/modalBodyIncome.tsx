@@ -1,9 +1,7 @@
 'use client';
 import { transactionModalState } from '@/app/atoms/transactionModalAtom';
 import Income from '@/app/models/Transactions/Income';
-import { firestore } from '@/firebase/clientApp';
 import { Button, ModalFooter } from '@chakra-ui/react';
-import { Timestamp, doc } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
@@ -11,7 +9,7 @@ interface ModalBodyIncomeProps {
 }
 
 const ModalBodyIncome: React.FC<ModalBodyIncomeProps> = () => {
-    const setAuthModalState = useSetRecoilState(transactionModalState);
+    const setModalState = useSetRecoilState(transactionModalState);
     const [formData, setFormData] = useState({
         isRecurring: false,
         name: '',
@@ -23,31 +21,32 @@ const ModalBodyIncome: React.FC<ModalBodyIncomeProps> = () => {
         const { name, value, type, checked } = e.target;
         setFormData(prevState => ({
             ...prevState,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: type === 'checkbox' ? checked : value,
+            [name]: name === 'amount' ? (value === '' ? '' : parseFloat(value)) : value, // Handle empty string case for amount
         }));
     };
+
+    const handleClose = () => {
+        setModalState(prev => ({ ...prev, open: false }))
+    }
 
     const handleSubmit = async () => {
 
         const reqBody = new Income(
-            parseInt(formData.amount),
+            formData.amount,
             formData.dueDate,
             formData.isRecurring,
             formData.name
         );
 
-
-        fetch('/api/get-document',
+        fetch('/api/register-income',
             {
                 method: 'POST',
                 body: JSON.stringify(reqBody)
             }
         ).then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch /api/get-document');
-            }
-            console.log(response.json());
-            return response.json();
+            handleClose();
+            console.log(response);
         })
     };
 
@@ -89,7 +88,7 @@ const ModalBodyIncome: React.FC<ModalBodyIncomeProps> = () => {
             />
         </div>
         <ModalFooter alignItems={"center"} justifyContent={"center"}>
-            <Button onClick={() => setAuthModalState(prev => ({ ...prev, open: false }))} mr={3}>Cancel</Button>
+            <Button onClick={handleClose} mr={3}>Cancel</Button>
             <Button colorScheme="blue" onClick={handleSubmit}> Confirm </Button>
         </ModalFooter>
     </>

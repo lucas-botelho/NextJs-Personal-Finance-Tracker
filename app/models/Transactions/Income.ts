@@ -8,8 +8,8 @@ export default class Income implements ITransaction {
     title: string;
     type: number;
 
-    constructor(amount: number, date: string, isRecurring: boolean, title: string) {
-        this.amount = amount;
+    constructor(amount: string, date: string, isRecurring: boolean, title: string) {
+        this.amount = Number(parseFloat(amount).toFixed(2));
         this.date = date;
         this.isRecurring = isRecurring;
         this.title = title;
