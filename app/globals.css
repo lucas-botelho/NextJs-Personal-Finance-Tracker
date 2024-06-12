@@ -75,4 +75,15 @@
     content: ":";
   }
 
+
+  .expense-column .expense-name::after{
+    content: ": ";
+  } 
+
+  .expense-column .expense-value::after{
+    content: " -";
+  } 
+  .expense-column span{
+    @apply max-h-10 overflow-hidden truncate
+  } 
 }

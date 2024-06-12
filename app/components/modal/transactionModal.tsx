@@ -32,10 +32,6 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ /* Destructure your
                         <ModalBody display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
                             {modalBodyFactory(modalState.view)}
                         </ModalBody>
-                        <ModalFooter alignItems={"center"} justifyContent={"center"}>
-                            <Button onClick={handleClose} mr={3}>Cancel</Button>
-                            <Button colorScheme="blue" onClick={() => { }}> Confirm </Button>
-                        </ModalFooter>
                     </ModalContent>
                 </ModalOverlay>
             </Modal >
