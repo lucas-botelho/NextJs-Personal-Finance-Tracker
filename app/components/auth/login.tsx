@@ -10,21 +10,6 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-    const cookies = useCookies();
-
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-    if (user) {
-        cookies.set('user', user.user.uid);
-        redirect('/');
-    }
-    if (cookies.get('user') !== undefined) {
-        redirect('/');
-    }
 
     return (
         <div className="flex items-center justify-center h-screen">

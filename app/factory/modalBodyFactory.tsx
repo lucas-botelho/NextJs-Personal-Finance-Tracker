@@ -1,12 +1,12 @@
 import ModalBodyIncome from "../components/modal/modalBodyIncome";
 
-export const modalBodyFactory = (view: string) => {
+export const modalBodyFactory = (view: string, userID: string) => {
 
     let content: React.ReactNode = <div></div>;
 
 
     if (view === "income") {
-        content = <ModalBodyIncome />
+        content = <ModalBodyIncome userID={userID} />
     }
 
     // if(view === "expense"){

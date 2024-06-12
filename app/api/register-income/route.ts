@@ -7,16 +7,16 @@ export async function POST(request: Request) {
     try {
         const uID = getUserCookie().toString();
 
-        if(uID === ""){
+        if (uID === "") {
             return new Response(JSON.stringify({ error: "Could not identify user" }), { status: 500 });
-        }       
-        const requestBody : Income = await request.json();
+        }
+        const requestBody: Income = await request.json();
 
         const expenseCOllectionRef = collection(firestore, 'Income');
         await addDoc(expenseCOllectionRef, {
             amount: requestBody.amount,
             date: Timestamp.fromDate(new Date(requestBody.date)),
-            recurring: requestBody.isRecurring,
+            recurring: requestBody.isRecurring ? true : false,
             title: requestBody.title,
             type: requestBody.type,
             userId: uID

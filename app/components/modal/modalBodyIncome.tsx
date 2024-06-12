@@ -6,9 +6,11 @@ import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 interface ModalBodyIncomeProps {
+    userID: string;
 }
 
-const ModalBodyIncome: React.FC<ModalBodyIncomeProps> = () => {
+const ModalBodyIncome: React.FC<ModalBodyIncomeProps> = ({ userID }) => {
+
     const setModalState = useSetRecoilState(transactionModalState);
     const [formData, setFormData] = useState({
         isRecurring: false,
@@ -36,7 +38,8 @@ const ModalBodyIncome: React.FC<ModalBodyIncomeProps> = () => {
             formData.amount,
             formData.dueDate,
             formData.isRecurring,
-            formData.name
+            formData.name,
+            userID
         );
 
         fetch('/api/register-income',

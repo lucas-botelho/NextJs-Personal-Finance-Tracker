@@ -7,10 +7,10 @@ import { useState } from "react";
 import { useRecoilState } from 'recoil';
 
 interface TransactionModalProps {
-    // Define your component props here
+    userID: string;
 }
 
-const TransactionModal: React.FC<TransactionModalProps> = ({ /* Destructure your props here */ }) => {
+const TransactionModal: React.FC<TransactionModalProps> = ({ userID }) => {
     const [modalState, setModalState] = useRecoilState(transactionModalState)
 
     const handleClose = () => {
@@ -30,7 +30,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ /* Destructure your
                         </ModalHeader>
                         <ModalCloseButton />
                         <ModalBody display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
-                            {modalBodyFactory(modalState.view)}
+                            {modalBodyFactory(modalState.view, userID)}
                         </ModalBody>
                     </ModalContent>
                 </ModalOverlay>

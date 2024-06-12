@@ -6,4 +6,5 @@ export interface ITransaction {
     isRecurring: boolean;
     title: string;
     type: number;
+    userId: string;
 }

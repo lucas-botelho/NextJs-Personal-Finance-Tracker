@@ -12,18 +12,19 @@ import { monthlyTransactionsAtom } from "../atoms/monthlyTransactionsAtom";
 import { query, where } from "firebase/firestore";
 
 interface DashboardProps {
+    userID: string;
 }
 
-export default function Dashboard({ }: DashboardProps) {
+export default function Dashboard({ userID }: DashboardProps) {
     // const setMonthlyIncomeState = useSetRecoilState(monthlyTransactionsAtom);
     const [incomeAmount, setIncomeAmount] = useRecoilState(monthlyTransactionsAtom)
 
-    const getIncome = () => {
-        // setModalState(prev => ({ ...prev, open: false }))
+    // const getIncome = () => {
+    //     // setModalState(prev => ({ ...prev, open: false }))
 
-        return fetch('/api/get-month-income')
-            .then(response => response.json())
-    }
+    //     return fetch('/api/get-month-income')
+    //         .then(response => response.json())
+    // }
 
 
     return (
@@ -51,7 +52,7 @@ export default function Dashboard({ }: DashboardProps) {
                     </div>
                 </MainContainer>
 
-                <TransactionModal></TransactionModal>
+                <TransactionModal userID={userID}></TransactionModal>
             </div>
 
         </>);
