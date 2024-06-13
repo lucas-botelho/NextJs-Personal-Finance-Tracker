@@ -5,13 +5,28 @@ export interface MonthExpensesAtomState {
     value: number;
 }
 
-const defaultModalState: MonthExpensesAtomState = {
+const defaultExpensesModalState: MonthExpensesAtomState = {
     value: 0,
 };
 
 export const monthExpensesAtomState = atom<MonthExpensesAtomState>({
     key: "monthExpensesAtomState",
-    default: defaultModalState,
+    default: defaultExpensesModalState,
 });
+
+
+export interface MonthIncomeAtomState {
+    value: number;
+}
+
+const defaultIncomeModalState: MonthIncomeAtomState = {
+    value: 0,
+};
+
+export const monthIncomeAtomState = atom<MonthIncomeAtomState>({
+    key: "monthIncomeAtomState",
+    default: defaultIncomeModalState,
+});
+
 
 

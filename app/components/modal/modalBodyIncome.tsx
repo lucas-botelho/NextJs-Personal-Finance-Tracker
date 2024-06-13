@@ -1,8 +1,8 @@
 'use client';
+import { monthIncomeAtomState } from '@/app/atoms/monthlyTransactionsAtom';
 import { transactionModalState } from '@/app/atoms/transactionModalAtom';
 import Income from '@/app/models/Transactions/Income';
 import { Button, ModalFooter } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
@@ -12,6 +12,7 @@ interface ModalBodyIncomeProps {
 
 const ModalBodyIncome: React.FC<ModalBodyIncomeProps> = ({ userID }) => {
 
+    const setMonthIncomeValue = useSetRecoilState(monthIncomeAtomState);
     const setModalState = useSetRecoilState(transactionModalState);
     const [formData, setFormData] = useState({
         isRecurring: false,
@@ -19,7 +20,6 @@ const ModalBodyIncome: React.FC<ModalBodyIncomeProps> = ({ userID }) => {
         amount: '',
         dueDate: '',
     });
-    const router = useRouter();
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,8 +51,10 @@ const ModalBodyIncome: React.FC<ModalBodyIncomeProps> = ({ userID }) => {
                 body: JSON.stringify(reqBody)
             }
         ).then(response => {
-            handleClose();
-            router.refresh();
+            if (response.status === 200) {
+                handleClose();
+                setMonthIncomeValue(prev => ({ ...prev, value: prev.value + Number(formData.amount) }))
+            }
         })
     };
 

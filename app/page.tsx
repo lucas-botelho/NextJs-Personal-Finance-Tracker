@@ -5,13 +5,13 @@ import Dashboard from './dashboard/dashboard';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase/clientApp';
 import { Spinner } from '@chakra-ui/react';
-import CashDisplay from './components/information/monthTotals/cashDisplay';
 import MainContainer from './components/layout/mainContainer';
 import MainContainerHeader from './components/layout/mainContainerHeader';
 import Topbar from './components/layout/topbar';
 import TransactionModal from './components/modal/transactionModal';
 import SideNav from './components/navigation/sideNav';
 import MonthTotalExpenses from './components/information/monthTotals/monthTotalExpenses';
+import MonthTotalIncome from './components/information/monthTotals/monthTotalIncome';
 
 export default function AppPage() {
   const [user, loadingUser, error] = useAuthState(auth);
@@ -47,9 +47,8 @@ export default function AppPage() {
         <SideNav />
         <MainContainer>
           <MainContainerHeader>
+            <MonthTotalIncome userID={user.uid} />
             <MonthTotalExpenses userID={user.uid} />
-            {/* <MonthTotalExpenses userID={user.uid} />
-            <MonthTotalExpenses userID={user.uid} /> */}
           </MainContainerHeader>
           <Dashboard userID={user.uid} />
 
