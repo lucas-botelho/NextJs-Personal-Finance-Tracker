@@ -37,7 +37,6 @@ export default function AppPage() {
   }
 
   if (user) {
-    console.log(user.uid);
 
     return <>
       <div className="header-container">
@@ -49,7 +48,7 @@ export default function AppPage() {
           <MainContainerHeader>
             <CashDisplay title="Income" apiRoute='calculate-month-income' userID={user.uid} />
             <CashDisplay title="Expense" apiRoute='calculate-month-expenses' userID={user.uid} />
-            <CashDisplay title="Saving" apiRoute='calculate-month-savings' userID={user.uid} />
+            <CashDisplay title="Saving" apiRoute='' userID={user.uid} />
           </MainContainerHeader>
           <Dashboard userID={user.uid} />
 

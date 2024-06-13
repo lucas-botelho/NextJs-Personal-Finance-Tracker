@@ -1,17 +1,18 @@
 import { firestore } from "@/firebase/clientApp";
 import { Timestamp, addDoc, collection, doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
-import Income from "@/app/models/Transactions/Income";
+import Expense from "@/app/models/Transactions/Expense";
 
 export async function POST(request: Request) {
     try {
-        const requestBody: Income = await request.json();
+        const requestBody: Expense = await request.json();
 
-        const expenseCOllectionRef = collection(firestore, 'Income');
+        const expenseCOllectionRef = collection(firestore, 'Expense');
         await addDoc(expenseCOllectionRef, {
             amount: requestBody.amount,
             date: Timestamp.fromDate(new Date(requestBody.date)),
             recurring: requestBody.isRecurring ? true : false,
             title: requestBody.title,
+            category: requestBody.category,
             userId: requestBody.userId
         });
 

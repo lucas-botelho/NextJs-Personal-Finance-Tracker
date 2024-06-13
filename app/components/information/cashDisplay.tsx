@@ -27,7 +27,6 @@ const CashDisplay: React.FC<DisplayProps> = ({ title, apiRoute, userID }) => {
                     body: JSON.stringify({ userID: userID })
                 });
                 const data = await response.json();
-                console.log('data:', data);
 
                 setMonthlyIncome(data.totalIncome || 0);
                 setIsLoading(false);

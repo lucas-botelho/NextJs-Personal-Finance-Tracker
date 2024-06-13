@@ -21,7 +21,7 @@ export default function Dashboard({ userID }: DashboardProps) {
         <>
             <div className='card-container'>
                 <ExpenseColumn title="Mandatory" />
-                <ExpenseColumn title="Necessities" />
+                <ExpenseColumn title="Needs" />
                 <ExpenseColumn title="Wants" />
             </div>
             <div className='card-container'>

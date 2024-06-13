@@ -19,15 +19,13 @@ export async function POST(request: Request) {
 
         const snapshot = await getDocs(queryRef);
 
-        console.log('snapshot:', snapshot);
-
         let totalIncome = 0;
         snapshot.forEach((doc) => {
+            console.log('doc:', doc.data());
             const incomeAmount = doc.data().amount;
             totalIncome += incomeAmount;
         });
 
-        console.log('Total Income:', totalIncome);
 
 
         return new Response(JSON.stringify({ totalIncome: totalIncome }), { status: 200 });
