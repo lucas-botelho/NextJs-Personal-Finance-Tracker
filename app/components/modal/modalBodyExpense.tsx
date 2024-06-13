@@ -15,7 +15,7 @@ const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
 
     const setModalState = useSetRecoilState(transactionModalState);
     const setMonthExpensesValue = useSetRecoilState(monthExpensesAtomState);
-    const [categoryFormData, setCategoryValue] = useState({ category: 1 });
+    const [categoryFormData, setCategoryValue] = useState({ category: options[0] });
     const [formData, setFormData] = useState({
         isRecurring: false,
         name: '',
@@ -35,7 +35,7 @@ const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
 
     const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const { value } = e.target;
-        setCategoryValue({ ...categoryFormData, category: Number(value) });
+        setCategoryValue({ ...categoryFormData, category: value });
     };
 
     const handleClose = () => {
@@ -102,7 +102,7 @@ const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
                 onChange={handleChangeSelect}
             >
                 {options.map((option, idx) => (
-                    <option key={idx + 1} value={idx + 1}>{option}</option>
+                    <option key={idx} value={option}>{option}</option>
                 ))}
             </select>
             <label htmlFor="recurring">Recurring</label>

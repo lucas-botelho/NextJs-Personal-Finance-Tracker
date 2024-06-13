@@ -6,9 +6,9 @@ export default class Expense implements ITransaction {
     isRecurring: boolean;
     title: string;
     userId: string;
-    category: number;
+    category: string;
 
-    constructor(amount: string, date: string, isRecurring: boolean, title: string, userId: string, category: number) {
+    constructor(amount: string, date: string, isRecurring: boolean, title: string, userId: string, category: string) {
         this.amount = Number(parseFloat(amount).toFixed(2));
         this.date = date;
         this.isRecurring = isRecurring;
