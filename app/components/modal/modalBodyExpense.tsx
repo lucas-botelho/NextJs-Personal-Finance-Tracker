@@ -1,8 +1,8 @@
 'use client';
+import { monthExpensesAtomState } from '@/app/atoms/monthlyTransactionsAtom';
 import { transactionModalState } from '@/app/atoms/transactionModalAtom';
 import Expense from '@/app/models/Transactions/Expense';
 import { Button, ModalFooter } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
@@ -14,6 +14,7 @@ const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
     const options = ["Want", "Need", "Mandatory"];
 
     const setModalState = useSetRecoilState(transactionModalState);
+    const setMonthExpensesValue = useSetRecoilState(monthExpensesAtomState);
     const [categoryFormData, setCategoryValue] = useState({ category: 1 });
     const [formData, setFormData] = useState({
         isRecurring: false,
@@ -21,7 +22,6 @@ const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
         amount: '',
         dueDate: '',
     });
-    const router = useRouter();
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,12 +32,11 @@ const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
             [name]: name === 'amount' ? (value === '' ? '' : parseFloat(value)) : value, // Handle empty string case for amount
         }));
     };
+
     const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const { value } = e.target;
         setCategoryValue({ ...categoryFormData, category: Number(value) });
     };
-
-
 
     const handleClose = () => {
         setModalState(prev => ({ ...prev, open: false }))
@@ -60,8 +59,10 @@ const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
                 body: JSON.stringify(reqBody)
             }
         ).then(response => {
-            handleClose();
-            router.refresh();
+            if (response.status === 200) {
+                handleClose();
+                setMonthExpensesValue(prev => ({ ...prev, value: prev.value + Number(formData.amount) }))
+            }
         })
     };
 
