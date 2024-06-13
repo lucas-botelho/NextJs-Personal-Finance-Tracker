@@ -2,6 +2,7 @@
 import { transactionModalState } from '@/app/atoms/transactionModalAtom';
 import Income from '@/app/models/Transactions/Income';
 import { Button, ModalFooter } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
@@ -18,6 +19,8 @@ const ModalBodyIncome: React.FC<ModalBodyIncomeProps> = ({ userID }) => {
         amount: '',
         dueDate: '',
     });
+    const router = useRouter();
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = e.target;
@@ -49,7 +52,7 @@ const ModalBodyIncome: React.FC<ModalBodyIncomeProps> = ({ userID }) => {
             }
         ).then(response => {
             handleClose();
-            console.log(response);
+            router.refresh();
         })
     };
 

@@ -4,7 +4,7 @@ interface MainContainerContentProps {
     children: ReactNode;
 }
 
-const MainContainerContent: React.FC<MainContainerContentProps> = ({ children }) => {
+const MainContainerHeader: React.FC<MainContainerContentProps> = ({ children }) => {
     return (
         <div className='main-container-header'>
             {children}
@@ -12,4 +12,4 @@ const MainContainerContent: React.FC<MainContainerContentProps> = ({ children })
     );
 };
 
-export default MainContainerContent;
+export default MainContainerHeader;

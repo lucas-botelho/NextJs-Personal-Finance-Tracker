@@ -6,7 +6,6 @@ export default class Income implements ITransaction {
     date: string;
     isRecurring: boolean;
     title: string;
-    type: number;
     userId: string;
 
     constructor(amount: string, date: string, isRecurring: boolean, title: string, userId: string) {
@@ -14,7 +13,6 @@ export default class Income implements ITransaction {
         this.date = date;
         this.isRecurring = isRecurring;
         this.title = title;
-        this.type = 3;
         this.userId = userId;
     }
 }

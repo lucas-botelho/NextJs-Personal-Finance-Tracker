@@ -5,11 +5,6 @@ import Income from "@/app/models/Transactions/Income";
 
 export async function POST(request: Request) {
     try {
-        const uID = getUserCookie().toString();
-
-        if (uID === "") {
-            return new Response(JSON.stringify({ error: "Could not identify user" }), { status: 500 });
-        }
         const requestBody: Income = await request.json();
 
         const expenseCOllectionRef = collection(firestore, 'Income');
@@ -18,8 +13,7 @@ export async function POST(request: Request) {
             date: Timestamp.fromDate(new Date(requestBody.date)),
             recurring: requestBody.isRecurring ? true : false,
             title: requestBody.title,
-            type: requestBody.type,
-            userId: uID
+            userId: requestBody.userId
         });
 
         return new Response(JSON.stringify({ message: 'Document reference created successfully' }), { status: 200 });
