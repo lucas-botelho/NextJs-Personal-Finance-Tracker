@@ -1,8 +1,11 @@
 'use client';
+import { wantsExpensesAtomState, needsExpensesAtomState, necessaryExpensesAtomState, Expense as AtomExpense } from '@/app/atoms/expenseListAtom';
 import { monthExpensesAtomState } from '@/app/atoms/monthlyTransactionsAtom';
 import { transactionModalState } from '@/app/atoms/transactionModalAtom';
 import Expense from '@/app/models/Transactions/Expense';
 import { Button, ModalFooter } from '@chakra-ui/react';
+import { Timestamp } from 'firebase/firestore';
+import { title } from 'process';
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
@@ -12,6 +15,9 @@ interface ModalBodyExpenseProps {
 
 const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
     const options = ["Want", "Need", "Mandatory"];
+    const setMandatoryExpensesListState = useSetRecoilState(necessaryExpensesAtomState);
+    const setNeedsExpensesListState = useSetRecoilState(needsExpensesAtomState);
+    const setWantsExpensesListState = useSetRecoilState(wantsExpensesAtomState);
 
     const setModalState = useSetRecoilState(transactionModalState);
     const setMonthExpensesValue = useSetRecoilState(monthExpensesAtomState);
@@ -61,6 +67,27 @@ const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
             if (response.status === 200) {
                 handleClose();
                 setMonthExpensesValue(prev => ({ ...prev, value: prev.value + Number(formData.amount) }))
+
+                const atomExpense = {
+                    amount: Number(formData.amount),
+                    category: categoryFormData.category,
+                    date: Timestamp.fromDate(new Date(formData.dueDate)),
+                    isRecurring: formData.isRecurring,
+                    title: formData.name,
+                    userId: userID
+                } as AtomExpense;
+
+                switch (categoryFormData.category) {
+                    case 'Want':
+                        setWantsExpensesListState(prev => ({ expenses: [...prev.expenses, atomExpense] }));
+                        break;
+                    case 'Need':
+                        setNeedsExpensesListState(prev => ({ expenses: [...prev.expenses, atomExpense] }));
+                        break;
+                    case 'Mandatory':
+                        setMandatoryExpensesListState(prev => ({ expenses: [...prev.expenses, atomExpense] }));
+                        break;
+                }
             }
         })
     };
