@@ -18,10 +18,11 @@ export default function AppPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user && !loadingUser) {
+    if (!loadingUser && !user) {
       router.push('/auth');
     }
-  }, []);
+  }, [user, loadingUser, router]);
+
 
   if (loadingUser) {
     return (
@@ -38,7 +39,6 @@ export default function AppPage() {
   }
 
   if (user) {
-
     return <>
       <div className="header-container">
         <Topbar />
