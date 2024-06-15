@@ -18,7 +18,7 @@ export default function AppPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if ((!loadingUser && !user) || error) {
+    if (!user && !loadingUser) {
       router.push('/auth');
     }
   }, []);

@@ -1,54 +1,89 @@
-import React from 'react';
-
-interface Expense {
-    name: string;
-    value: number;
-    dueDate: string;
-}
+import { Expense, ExpenseState } from '@/app/atoms/expenseListAtom';
+import { firestore } from '@/firebase/clientApp';
+import { Spinner } from '@chakra-ui/react';
+import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
+import React, { useEffect } from 'react';
+import { RecoilState, useRecoilState } from 'recoil';
 
 interface ExpenseColumnProps {
+    userID: string;
     title: string;
+    atom: RecoilState<ExpenseState>;
 }
 
-const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title }) => {
+const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) => {
     let total = 0;
 
-    const expenses: Expense[] = [
-        { name: 'Expense 1 Expense 1 Expense 1 Expense 1 ', value: 20000000, dueDate: '2022-01-01' },
-        { name: 'Expense 2', value: 20000000, dueDate: '2022-02-01' },
-        { name: 'Expense 3', value: 300, dueDate: '2022-03-01' },
-        { name: 'Expense 3', value: 300, dueDate: '2022-03-01' },
-        { name: 'Expense 3', value: 300, dueDate: '2022-03-01' },
-        { name: 'Expense 3', value: 300, dueDate: '2022-03-01' },
-        { name: 'Expense 3', value: 300, dueDate: '2022-03-01' },
-    ];
-
-    const formatDate = (date: Date) => {
+    const formatDate = (timestamp: Timestamp) => {
+        const date = new Date(timestamp.seconds * 1000);
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() returns 0-indexed month
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         return `${day}/${month}`;
     };
 
-    return (
-        <div className='expense-column h-full w-full'>
+    const [expensesState, setExpensesState] = useRecoilState(atom)
+
+    const fetchExpenses = async () => {
+
+        const fetchExpensesByCategory = async (category: string) => {
+            const oneMonthAgo = new Date();
+            oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+            const expenseRef = await collection(firestore, 'Expense');
+            const queryRef = await query(expenseRef,
+                where('userId', '==', userID),
+                where('date', '>=', oneMonthAgo),
+                where('category', '==', category)
+            );
+
+            const snapshot = await getDocs(queryRef);
+            const data = snapshot.docs.map((doc) => ({
+                ...doc.data() as Expense
+            }));
+
+            setExpensesState(prev => ({ ...prev, expenses: data as Expense[] }));
+        };
+
+        switch (title) {
+            case 'Mandatory':
+                fetchExpensesByCategory('Mandatory');
+                break;
+            case 'Needs':
+                fetchExpensesByCategory('Need');
+                break;
+            case 'Wants':
+                fetchExpensesByCategory('Want');
+                break;
+        }
+    }
+
+    useEffect(() => {
+        fetchExpenses();
+    }, []);
+
+    return (<>
+        <div className='expense-column h-full w-full flex-1 text-center'>
             <h2 className='text-2xl font-bold mb-2'>{title}</h2>
             <span className='border-solid border-t-2 w-64 m-2'></span>
             <ul className='space-y-2 w-10/12'>
-                {expenses.map((expense, index) => {
-                    total += expense.value;
+                <div className='text-left flex p-2 bg-white rounded shadow'>
+                    <span className=' text-gray-800  w-6/12'>Title</span>
+                    <span className='text-gray-600 text-center w-4/12'>Amount</span>
+                    <span className='text-gray-600 text-center w-2/12'>Date</span>
+                </div>
+                {expensesState.expenses.map((expense, index) => {
+                    total += expense.amount;
                     return (
-                        <li key={index} className='flex items-center justify-between p-2 bg-white rounded shadow'>
-                            <span className='mr-2 text-gray-800 expense-name w-6/12'>{expense.name}</span>
-                            <span className='mr-2 text-gray-600 expense-value w-3/12'>{expense.value}</span>
-                            <span className='text-gray-600 w-3/12'>{formatDate(new Date(expense.dueDate))}</span>
+                        <li key={index} className='flex p-2 bg-white rounded shadow'>
+                            <span className='text-left text-gray-800 expense-name w-6/12'>{expense.title}</span>
+                            <span className='text-gray-600 expense-value w-4/12'>{expense.amount}</span>
+                            <span className='text-gray-600 w-2/12'>{formatDate(expense.date)}</span>
                         </li>
                     );
                 })}
             </ul>
-            <span className='border-solid border-t-2 w-64 m-2'></span>
-
-            <div className='font-bold mt-4'>Total: {total}</div>
+            <div className='font-bold mt-auto self-center bottom-0'>Total: {total}</div>
         </div>
+    </>
     );
 };
 

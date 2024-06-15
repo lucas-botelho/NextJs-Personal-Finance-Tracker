@@ -43,7 +43,6 @@ const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
     }
 
     const handleSubmit = async () => {
-        console.log('Form Data:', formData, 'Category:', categoryFormData.category)
         const reqBody = new Expense(
             formData.amount,
             formData.dueDate,

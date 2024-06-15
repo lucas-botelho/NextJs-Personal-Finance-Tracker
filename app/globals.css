@@ -77,17 +77,17 @@
 
 
   .expense-column .expense-name::after{
-    content: ": ";
+    content: ":";
   } 
 
   .expense-column .expense-value::after{
-    content: " -";
+    content: "€";
   } 
   .expense-column span{
     @apply max-h-10 overflow-hidden truncate
   } 
 
   .card-container{
-    @apply flex flex-col border-solid pb-1 pl-1 pr-1 mb-6 md:flex-row
+    @apply flex flex-col border-solid pb-1 pl-1 pr-1 mb-2 md:flex-row h-96
   }
 }
