@@ -48,7 +48,7 @@ const MonthTotalSavings: React.FC<DisplayProps> = ({ userID }) => {
                 <p>
                     <span className='text-black'>Savings: </span>
                     <span className='text-green-800'>
-                        {monthValue.value} &euro;
+                        {monthValue.value.toFixed(2)} &euro;
                     </span>
                 </p>
             )}

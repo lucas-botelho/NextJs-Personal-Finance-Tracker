@@ -12,7 +12,7 @@ export default function Dashboard({ userID }: DashboardProps) {
     return (
         <>
             <div className='card-container h-full'>
-                <ExpenseColumn title="Mandatory" userID={userID} atom={necessaryExpensesAtomState} />
+                <ExpenseColumn title="Fixed" userID={userID} atom={necessaryExpensesAtomState} />
                 <ExpenseColumn title="Needs" userID={userID} atom={needsExpensesAtomState} />
                 <ExpenseColumn title="Wants" userID={userID} atom={wantsExpensesAtomState} />
             </div>

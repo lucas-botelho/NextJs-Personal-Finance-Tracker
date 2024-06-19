@@ -8,7 +8,7 @@ export async function POST(request: Request) {
 
         const expenseCOllectionRef = collection(firestore, 'Income');
         await addDoc(expenseCOllectionRef, {
-            amount: requestBody.amount,
+            amount: requestBody.amount ?? 0,
             date: Timestamp.fromDate(new Date(requestBody.date)),
             recurring: requestBody.isRecurring ? true : false,
             title: requestBody.title,

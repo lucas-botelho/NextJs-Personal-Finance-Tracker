@@ -3,7 +3,7 @@ import { monthSavingsAtomState } from '@/app/atoms/monthlyTransactionsAtom';
 import { transactionModalState } from '@/app/atoms/transactionModalAtom';
 import Income from '@/app/models/Transactions/Income';
 import { Button, ModalFooter } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 interface ModalBodySavingInProps {
@@ -23,6 +23,19 @@ const ModalBodySaving: React.FC<ModalBodySavingInProps> = ({ userID, isIncome })
         dueDate: '',
     });
 
+    useEffect(() => {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+
+        const formattedDate = `${yyyy}-${mm}-${dd}`;
+
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            dueDate: formattedDate
+        }));
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = e.target;
@@ -88,18 +101,6 @@ const ModalBodySaving: React.FC<ModalBodySavingInProps> = ({ userID, isIncome })
                 value={formData.dueDate}
                 onChange={handleChange}
             />
-            {isIncome &&
-                <>
-                    <label htmlFor="recurring">Recurring</label>
-                    <input style={{ width: '2.5rem' }}
-                        type="checkbox"
-                        id="recurring"
-                        name="isRecurring"
-                        checked={formData.isRecurring}
-                        onChange={handleChange}
-                    />
-                </>
-            }
         </div>
         <ModalFooter alignItems={"center"} justifyContent={"center"}>
             <Button onClick={handleClose} mr={3}>Cancel</Button>

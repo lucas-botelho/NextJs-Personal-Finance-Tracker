@@ -48,7 +48,7 @@ const MonthTotalIncome: React.FC<DisplayProps> = ({ userID }) => {
                 <p>
                     <span className='text-black'>Income: </span>
                     <span className='text-green-800'>
-                        {monthIncomeValue.value} &euro;
+                        {monthIncomeValue.value.toFixed(2)} &euro;
                     </span>
                 </p>
             )}

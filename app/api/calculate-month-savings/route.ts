@@ -11,19 +11,14 @@ export async function POST(request: Request) {
 
         const currentDate = new Date();
         const oneMonthAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 25);
-        const incomeRef = await collection(firestore, 'Saving');
-        const queryRef = await query(incomeRef,
-            and(
-                where('userId', '==', body.userID),
-                where('date', '>=', oneMonthAgo),
-                or(
-                    where('recurring', '==', true)
-                )
-            )
+        const incomeRef = collection(firestore, 'Saving');
+        const queryRef = query(incomeRef,
+            where('userId', '==', body.userID),
+            where('date', '>=', oneMonthAgo),
+            where('recurring', '==', false)
         );
 
         const snapshot = await getDocs(queryRef);
-
 
         let totalIncome = 0;
         snapshot.forEach((doc) => {

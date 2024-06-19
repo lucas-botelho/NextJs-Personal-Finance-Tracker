@@ -12,6 +12,7 @@ interface ExpenseColumnProps {
 
 const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) => {
     let total = 0;
+    const [expensesState, setExpensesState] = useRecoilState(atom)
 
     const formatDate = (timestamp: Timestamp) => {
         const date = new Date(timestamp.seconds * 1000);
@@ -20,35 +21,42 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
         return `${day}/${month}`;
     };
 
-    const [expensesState, setExpensesState] = useRecoilState(atom)
-
     const fetchExpenses = async () => {
 
         const fetchExpensesByCategory = async (category: string) => {
             const currentDate = new Date();
             const oneMonthAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 25);
-            const expenseRef = await collection(firestore, 'Expense');
-            const queryRef = await query(expenseRef,
-                and(
-                    where('userId', '==', userID),
-                    where('date', '>=', oneMonthAgo),
-                    where('category', '==', category),
-                    or(
-                        where('recurring', '==', true)
-                    )
-                )
+            const expenseRef = collection(firestore, 'Expense');
+            const queryRef = query(expenseRef,
+                where('userId', '==', userID),
+                where('date', '>=', oneMonthAgo),
+                where('category', '==', category),
+                where('recurring', '==', false)
             );
 
-            const snapshot = await getDocs(queryRef);
-            const data = snapshot.docs.map((doc) => ({
-                ...doc.data() as Expense
-            }));
+            const queryRefRecurring = query(expenseRef,
+                where('userId', '==', userID),
+                where('recurring', '==', true),
+                where('category', '==', category)
+            );
 
-            setExpensesState(prev => ({ ...prev, expenses: data as Expense[] }));
+            const [snapshot, snapshotRecurring] = await Promise.all([getDocs(queryRef), getDocs(queryRefRecurring)]);
+
+            const data = snapshot.docs.map((doc) => ({
+                ...doc.data()
+            })) as Expense[];
+
+            const dataRecurring = snapshotRecurring.docs.map((doc) => ({
+                ...doc.data()
+            })) as Expense[];
+
+            const allDocs = [...data, ...dataRecurring];
+
+            setExpensesState(prev => ({ ...prev, expenses: allDocs }));
         };
 
         switch (title) {
-            case 'Mandatory':
+            case 'Fixed':
                 fetchExpensesByCategory('Mandatory');
                 break;
             case 'Needs':
@@ -79,13 +87,13 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
                     return (
                         <li key={index} className='flex p-2 bg-white rounded shadow'>
                             <span className='text-left text-gray-800 expense-name w-5/12'>{expense.title}</span>
-                            <span className='text-gray-600 expense-value w-5/12'>{expense.amount}</span>
+                            <span className='text-gray-600 expense-value w-5/12'>{expense.amount}  &euro;</span>
                             <span className='text-gray-600 w-2/12'>{formatDate(expense.date)}</span>
                         </li>
                     );
                 })}
             </ul>
-            <div className='font-bold mt-auto self-center bottom-0'>Total: {total}</div>
+            <div className='font-bold mt-auto self-center bottom-0'>Total: {total.toFixed(2)} &euro;</div>
         </div>
     </>
     );

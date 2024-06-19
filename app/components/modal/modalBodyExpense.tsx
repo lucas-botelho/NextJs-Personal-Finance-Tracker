@@ -5,8 +5,7 @@ import { transactionModalState } from '@/app/atoms/transactionModalAtom';
 import Expense from '@/app/models/Transactions/Expense';
 import { Button, ModalFooter } from '@chakra-ui/react';
 import { Timestamp } from 'firebase/firestore';
-import { title } from 'process';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 interface ModalBodyExpenseProps {
@@ -14,7 +13,7 @@ interface ModalBodyExpenseProps {
 }
 
 const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
-    const options = ["Want", "Need", "Mandatory"];
+    const options = ["Want", "Need", "Fixed"];
     const setMandatoryExpensesListState = useSetRecoilState(necessaryExpensesAtomState);
     const setNeedsExpensesListState = useSetRecoilState(needsExpensesAtomState);
     const setWantsExpensesListState = useSetRecoilState(wantsExpensesAtomState);
@@ -29,6 +28,19 @@ const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
         dueDate: '',
     });
 
+    useEffect(() => {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+
+        const formattedDate = `${yyyy}-${mm}-${dd}`;
+
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            dueDate: formattedDate
+        }));
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = e.target;
@@ -55,7 +67,7 @@ const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
             formData.isRecurring,
             formData.name,
             userID,
-            categoryFormData.category
+            categoryFormData.category === 'Fixed' ? 'Mandatory' : categoryFormData.category
         );
 
         fetch('/api/register-expense',
@@ -84,7 +96,7 @@ const ModalBodyExpense: React.FC<ModalBodyExpenseProps> = ({ userID }) => {
                     case 'Need':
                         setNeedsExpensesListState(prev => ({ expenses: [...prev.expenses, atomExpense] }));
                         break;
-                    case 'Mandatory':
+                    case 'Fixed':
                         setMandatoryExpensesListState(prev => ({ expenses: [...prev.expenses, atomExpense] }));
                         break;
                 }

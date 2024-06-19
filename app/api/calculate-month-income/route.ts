@@ -11,27 +11,32 @@ export async function POST(request: Request) {
 
         const currentDate = new Date();
         const oneMonthAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 25);
-        const incomeRef = await collection(firestore, 'Income');
-        const queryRef = await query(incomeRef,
-            and(
-                where('userId', '==', body.userID),
-                where('date', '>=', oneMonthAgo),
-                or(
-                    where('recurring', '==', true)
-                )
-            )
+        const incomeRef = collection(firestore, 'Income');
+        const queryRefCurrentMonth = query(incomeRef,
+            where('userId', '==', body.userID),
+            where('date', '>=', oneMonthAgo),
+            where('recurring', '==', false)
         );
 
-        const snapshot = await getDocs(queryRef);
+        const snapshotCurrentMonth = await getDocs(queryRefCurrentMonth);
 
+        const queryRefRecurring = query(incomeRef,
+            where('userId', '==', body.userID),
+            where('recurring', '==', true)
+        );
+
+        const snapshotRecurring = await getDocs(queryRefRecurring);
 
         let totalIncome = 0;
-        snapshot.forEach((doc) => {
+        snapshotCurrentMonth.forEach((doc) => {
             const incomeAmount = doc.data().amount;
             totalIncome += incomeAmount;
         });
 
-
+        snapshotRecurring.forEach((doc) => {
+            const incomeAmount = doc.data().amount;
+            totalIncome += incomeAmount;
+        });
 
         return new Response(JSON.stringify({ totalIncome: totalIncome }), { status: 200 });
     } catch (error) {
