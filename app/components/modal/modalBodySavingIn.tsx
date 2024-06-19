@@ -1,25 +1,27 @@
 'use client';
+import { monthSavingsAtomState } from '@/app/atoms/monthlyTransactionsAtom';
 import { transactionModalState } from '@/app/atoms/transactionModalAtom';
 import Income from '@/app/models/Transactions/Income';
 import { Button, ModalFooter } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 interface ModalBodySavingInProps {
     userID: string;
+    isIncome: boolean;
 }
 
-const ModalBodySavingIn: React.FC<ModalBodySavingInProps> = ({ userID }) => {
+const ModalBodySaving: React.FC<ModalBodySavingInProps> = ({ userID, isIncome }) => {
 
     const setModalState = useSetRecoilState(transactionModalState);
+    const setMonthValue = useSetRecoilState(monthSavingsAtomState);
+
     const [formData, setFormData] = useState({
         isRecurring: false,
         name: '',
         amount: '',
         dueDate: '',
     });
-    const router = useRouter();
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,22 +39,24 @@ const ModalBodySavingIn: React.FC<ModalBodySavingInProps> = ({ userID }) => {
 
     const handleSubmit = async () => {
 
+        const value = isIncome ? formData.amount : (Number(formData.amount) * -1).toString();
+
         const reqBody = new Income(
-            formData.amount,
+            value,
             formData.dueDate,
             formData.isRecurring,
             formData.name,
             userID
         );
 
-        fetch('/api/register-income',
+        fetch('/api/register-saving',
             {
                 method: 'POST',
                 body: JSON.stringify(reqBody)
             }
         ).then(response => {
             handleClose();
-            router.refresh();
+            setMonthValue(prev => ({ ...prev, value: prev.value + Number(value) }))
         })
     };
 
@@ -84,14 +88,18 @@ const ModalBodySavingIn: React.FC<ModalBodySavingInProps> = ({ userID }) => {
                 value={formData.dueDate}
                 onChange={handleChange}
             />
-            <label htmlFor="recurring">Recurring</label>
-            <input style={{ width: '2.5rem' }}
-                type="checkbox"
-                id="recurring"
-                name="isRecurring"
-                checked={formData.isRecurring}
-                onChange={handleChange}
-            />
+            {isIncome &&
+                <>
+                    <label htmlFor="recurring">Recurring</label>
+                    <input style={{ width: '2.5rem' }}
+                        type="checkbox"
+                        id="recurring"
+                        name="isRecurring"
+                        checked={formData.isRecurring}
+                        onChange={handleChange}
+                    />
+                </>
+            }
         </div>
         <ModalFooter alignItems={"center"} justifyContent={"center"}>
             <Button onClick={handleClose} mr={3}>Cancel</Button>
@@ -101,4 +109,4 @@ const ModalBodySavingIn: React.FC<ModalBodySavingInProps> = ({ userID }) => {
     );
 };
 
-export default ModalBodySavingIn;
+export default ModalBodySaving;

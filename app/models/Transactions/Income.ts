@@ -11,7 +11,7 @@ export default class Income implements ITransaction {
     constructor(amount: string, date: string, isRecurring: boolean, title: string, userId: string) {
         this.amount = Number(parseFloat(amount).toFixed(2));
         this.date = date;
-        this.isRecurring = isRecurring;
+        this.isRecurring = isRecurring ?? false;
         this.title = title;
         this.userId = userId;
     }

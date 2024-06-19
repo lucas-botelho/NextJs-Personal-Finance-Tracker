@@ -1,7 +1,6 @@
 import ModalBodyExpense from "../components/modal/modalBodyExpense";
 import ModalBodyIncome from "../components/modal/modalBodyIncome";
-import ModalBodySavingIn from "../components/modal/modalBodySavingIn";
-import ModalBodySavingOut from "../components/modal/modalBodySavingOut";
+import ModalBodySaving from "../components/modal/modalBodySavingIn";
 
 export const modalBodyFactory = (view: string, userID: string) => {
 
@@ -17,11 +16,11 @@ export const modalBodyFactory = (view: string, userID: string) => {
     }
 
     if (view === "savingIn") {
-        content = <ModalBodySavingIn userID={userID} />
+        content = <ModalBodySaving userID={userID} isIncome={true} />
     }
 
     if (view === "savingOut") {
-        content = <ModalBodySavingOut userID={userID} />
+        content = <ModalBodySaving userID={userID} isIncome={false} />
     }
 
 

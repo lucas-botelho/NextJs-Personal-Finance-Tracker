@@ -1,31 +1,27 @@
 'use client'
 import { atom } from 'recoil'
 
-export interface MonthExpensesAtomState {
+export interface MonthTransactionAtomState {
     value: number;
 }
 
-const defaultExpensesModalState: MonthExpensesAtomState = {
+const defaultState: MonthTransactionAtomState = {
     value: 0,
 };
 
-export const monthExpensesAtomState = atom<MonthExpensesAtomState>({
+export const monthExpensesAtomState = atom({
     key: "monthExpensesAtomState",
-    default: defaultExpensesModalState,
+    default: defaultState,
 });
 
-
-export interface MonthIncomeAtomState {
-    value: number;
-}
-
-const defaultIncomeModalState: MonthIncomeAtomState = {
-    value: 0,
-};
-
-export const monthIncomeAtomState = atom<MonthIncomeAtomState>({
+export const monthIncomeAtomState = atom({
     key: "monthIncomeAtomState",
-    default: defaultIncomeModalState,
+    default: defaultState,
+});
+
+export const monthSavingsAtomState = atom({
+    key: "monthSavingsAtomState",
+    default: defaultState,
 });
 
 

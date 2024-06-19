@@ -12,6 +12,7 @@ import TransactionModal from './components/modal/transactionModal';
 import SideNav from './components/navigation/sideNav';
 import MonthTotalExpenses from './components/information/monthTotals/monthTotalExpenses';
 import MonthTotalIncome from './components/information/monthTotals/monthTotalIncome';
+import MonthTotalSavings from './components/information/monthTotals/monthTotalSavings';
 
 export default function AppPage() {
   const [user, loadingUser, error] = useAuthState(auth);
@@ -49,6 +50,7 @@ export default function AppPage() {
           <MainContainerHeader>
             <MonthTotalIncome userID={user.uid} />
             <MonthTotalExpenses userID={user.uid} />
+            <MonthTotalSavings userID={user.uid} />
           </MainContainerHeader>
           <Dashboard userID={user.uid} />
 
