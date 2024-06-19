@@ -1,7 +1,6 @@
 import { Expense, ExpenseState } from '@/app/atoms/expenseListAtom';
 import { firestore } from '@/firebase/clientApp';
-import { Spinner } from '@chakra-ui/react';
-import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
+import { collection, query, where, getDocs, Timestamp, or, and } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 import { RecoilState, useRecoilState } from 'recoil';
 
@@ -26,13 +25,18 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
     const fetchExpenses = async () => {
 
         const fetchExpensesByCategory = async (category: string) => {
-            const oneMonthAgo = new Date();
-            oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+            const currentDate = new Date();
+            const oneMonthAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 25);
             const expenseRef = await collection(firestore, 'Expense');
             const queryRef = await query(expenseRef,
-                where('userId', '==', userID),
-                where('date', '>=', oneMonthAgo),
-                where('category', '==', category)
+                and(
+                    where('userId', '==', userID),
+                    where('date', '>=', oneMonthAgo),
+                    where('category', '==', category),
+                    or(
+                        where('recurring', '==', true)
+                    )
+                )
             );
 
             const snapshot = await getDocs(queryRef);

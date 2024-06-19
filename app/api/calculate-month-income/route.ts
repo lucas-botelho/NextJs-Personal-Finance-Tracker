@@ -1,5 +1,5 @@
 import { firestore } from "@/firebase/clientApp";
-import { query, collection, where, getDocs } from "firebase/firestore";
+import { query, collection, where, getDocs, or, and } from "firebase/firestore";
 
 export async function POST(request: Request) {
     try {
@@ -9,12 +9,17 @@ export async function POST(request: Request) {
             throw new Error("userId is undefined");
         }
 
-        const oneMonthAgo = new Date();
-        oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+        const currentDate = new Date();
+        const oneMonthAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 25);
         const incomeRef = await collection(firestore, 'Income');
         const queryRef = await query(incomeRef,
-            where('userId', '==', body.userID),
-            where('date', '>=', oneMonthAgo)
+            and(
+                where('userId', '==', body.userID),
+                where('date', '>=', oneMonthAgo),
+                or(
+                    where('recurring', '==', true)
+                )
+            )
         );
 
         const snapshot = await getDocs(queryRef);
