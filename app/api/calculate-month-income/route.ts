@@ -1,5 +1,6 @@
 import { firestore } from "@/firebase/clientApp";
 import { query, collection, where, getDocs, or, and } from "firebase/firestore";
+import { monthlyStatusRecurringWhereClauses, monthlyStatusWhereClauses } from "../helpers/whereClauses";
 
 export async function POST(request: Request) {
     try {
@@ -9,20 +10,15 @@ export async function POST(request: Request) {
             throw new Error("userId is undefined");
         }
 
-        const currentDate = new Date();
-        const oneMonthAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 25);
         const incomeRef = collection(firestore, 'Income');
         const queryRefCurrentMonth = query(incomeRef,
-            where('userId', '==', body.userID),
-            where('date', '>=', oneMonthAgo),
-            where('recurring', '==', false)
+            ...monthlyStatusWhereClauses(body.userID)
         );
 
         const snapshotCurrentMonth = await getDocs(queryRefCurrentMonth);
 
         const queryRefRecurring = query(incomeRef,
-            where('userId', '==', body.userID),
-            where('recurring', '==', true)
+            ...monthlyStatusRecurringWhereClauses(body.userID)
         );
 
         const snapshotRecurring = await getDocs(queryRefRecurring);

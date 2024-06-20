@@ -1,5 +1,6 @@
 import { firestore } from "@/firebase/clientApp";
 import { query, collection, where, getDocs, and, or } from "firebase/firestore";
+import { monthlyStatusWhereClauses } from "../helpers/whereClauses";
 
 export async function POST(request: Request) {
     try {
@@ -9,13 +10,9 @@ export async function POST(request: Request) {
             throw new Error("userId is undefined");
         }
 
-        const currentDate = new Date();
-        const oneMonthAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 25);
         const incomeRef = collection(firestore, 'Saving');
         const queryRef = query(incomeRef,
-            where('userId', '==', body.userID),
-            where('date', '>=', oneMonthAgo),
-            where('recurring', '==', false)
+            ...monthlyStatusWhereClauses(body.userID)
         );
 
         const snapshot = await getDocs(queryRef);
@@ -25,8 +22,6 @@ export async function POST(request: Request) {
             const incomeAmount = doc.data().amount;
             totalIncome += incomeAmount;
         });
-
-
 
         return new Response(JSON.stringify({ totalIncome: totalIncome }), { status: 200 });
     } catch (error) {

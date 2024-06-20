@@ -54,8 +54,6 @@ export default function Dashboard({ userID }: DashboardProps) {
 
         fetchData();
 
-
-
     }, []);
 
     useEffect(() => {

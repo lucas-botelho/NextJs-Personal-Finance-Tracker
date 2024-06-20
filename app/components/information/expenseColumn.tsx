@@ -1,3 +1,4 @@
+import { expenseColumnRecurringWhereClauses, expenseColumnWhereClauses } from '@/app/api/helpers/whereClauses';
 import { Expense, ExpenseState } from '@/app/atoms/expenseListAtom';
 import { firestore } from '@/firebase/clientApp';
 import { collection, query, where, getDocs, Timestamp, or, and } from 'firebase/firestore';
@@ -24,20 +25,13 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
     const fetchExpenses = async () => {
 
         const fetchExpensesByCategory = async (category: string) => {
-            const currentDate = new Date();
-            const oneMonthAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 25);
             const expenseRef = collection(firestore, 'Expense');
             const queryRef = query(expenseRef,
-                where('userId', '==', userID),
-                where('date', '>=', oneMonthAgo),
-                where('category', '==', category),
-                where('recurring', '==', false)
+                ...expenseColumnWhereClauses(userID, category)
             );
 
             const queryRefRecurring = query(expenseRef,
-                where('userId', '==', userID),
-                where('recurring', '==', true),
-                where('category', '==', category)
+                ...expenseColumnRecurringWhereClauses(userID, category)
             );
 
             const [snapshot, snapshotRecurring] = await Promise.all([getDocs(queryRef), getDocs(queryRefRecurring)]);
