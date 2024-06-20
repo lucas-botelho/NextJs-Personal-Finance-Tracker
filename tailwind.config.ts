@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import colors, { gray } from "tailwindcss/colors"; 
+import colors, { gray } from "tailwindcss/colors";
 
 const config: Config = {
   mode: "jit",
@@ -18,22 +18,25 @@ const config: Config = {
             700: '#282b30',
             900: '#1e2124',
           },
-          custom:{
+          custom: {
             100: '#e0e1dd',
           }
         },
-        blue:{
+        blue: {
           discord: {
             500: '#7289da',
           },
-          custom:{
+          custom: {
             300: '#778da9',
             500: '#415a77',
             700: '#1b263b',
             900: '#0d1b2a',
           }
         },
-      }
+      },
+      animation: {
+        'spin-slow': 'spin 4s linear infinite',
+      },
     },
   },
   plugins: [],

@@ -45,7 +45,7 @@ export default function AppPage() {
         <Topbar />
       </div>
       <div className="main-container">
-        <SideNav />
+        <SideNav userID={user.uid} />
         <MainContainer>
           <MainContainerHeader>
             <MonthTotalIncome userID={user.uid} />
