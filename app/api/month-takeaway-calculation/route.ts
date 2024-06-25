@@ -1,5 +1,6 @@
 import { firestore } from "@/firebase/clientApp";
 import { collection, addDoc, Timestamp, query, where, sum, and, getDocs, doc, setDoc, getDoc } from "firebase/firestore";
+import { monthlyTakyawayCalculationWhereClauses } from "../helpers/whereClauses";
 
 
 export async function POST(request: Request) {
@@ -7,17 +8,13 @@ export async function POST(request: Request) {
         const { userId } = await request.json();
         const currentDate = new Date();
         currentDate.setDate(25);
-        const lastMonthDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, currentDate.getDate());
+        const nextMonthDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
 
         const expenseRef = collection(firestore, 'Expense');
         const savingsRef = collection(firestore, 'Saving');
         const incomeRef = collection(firestore, 'Income');
 
-        const whereClauses = [
-            where('userId', '==', userId),
-            where("date", ">=", Timestamp.fromDate(lastMonthDate)),
-            where("date", "<=", Timestamp.fromDate(currentDate))
-        ];
+        const whereClauses = monthlyTakyawayCalculationWhereClauses(userId);
 
         const expenseQueryRef = query(expenseRef, ...whereClauses);
 

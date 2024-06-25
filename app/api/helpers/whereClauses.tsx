@@ -1,27 +1,23 @@
-import { QueryFieldFilterConstraint, where } from "firebase/firestore";
+import { QueryFieldFilterConstraint, Timestamp, where } from "firebase/firestore";
+
+var startDate = new Date();
+startDate.setDate(25);
+var endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 25);
 
 export function monthlyStatusWhereClauses(userID: string): QueryFieldFilterConstraint[] {
 
-    const currentMonth = new Date();
-    currentMonth.setDate(25);
-    const monthPrior = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 25);
+
 
 
     return [
         where('userId', '==', userID),
-        where('date', '>=', monthPrior),
-        where('date', '<=', currentMonth),
+        where('date', '>=', startDate),
+        where('date', '<=', endDate),
         where('recurring', '==', false)
     ];
 }
 
 export function monthlyStatusRecurringWhereClauses(userID: string): QueryFieldFilterConstraint[] {
-
-    const currentMonth = new Date();
-    currentMonth.setDate(25);
-    const monthPrior = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 25);
-
-
     return [
         where('userId', '==', userID),
         where('recurring', '==', true)
@@ -29,15 +25,10 @@ export function monthlyStatusRecurringWhereClauses(userID: string): QueryFieldFi
 }
 
 export function expenseColumnWhereClauses(userID: string, category: string): QueryFieldFilterConstraint[] {
-
-    const currentMonth = new Date();
-    currentMonth.setDate(25);
-    const monthPrior = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 25);
-
     return [
         where('userId', '==', userID),
-        where('date', '>=', monthPrior),
-        where('date', '<=', currentMonth),
+        where('date', '>=', startDate),
+        where('date', '<=', endDate),
         where('category', '==', category),
         where('recurring', '==', false)
     ];
@@ -48,5 +39,13 @@ export function expenseColumnRecurringWhereClauses(userID: string, category: str
         where('userId', '==', userID),
         where('category', '==', category),
         where('recurring', '==', true)
+    ];
+}
+
+export function monthlyTakyawayCalculationWhereClauses(userID: string): QueryFieldFilterConstraint[] {
+    return [
+        where('userId', '==', userID),
+        where("date", ">=", Timestamp.fromDate(startDate)),
+        where("date", "<=", Timestamp.fromDate(endDate))
     ];
 }
