@@ -8,7 +8,6 @@ export async function POST(request: Request) {
         const { userId } = await request.json();
         const currentDate = new Date();
         currentDate.setDate(25);
-        const nextMonthDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
 
         const expenseRef = collection(firestore, 'Expense');
         const savingsRef = collection(firestore, 'Saving');

@@ -29,6 +29,8 @@ export async function POST(request: Request) {
             totalIncome += incomeAmount;
         });
 
+        console.log('totalIncome:', totalIncome);
+
         snapshotRecurring.forEach((doc) => {
             const incomeAmount = doc.data().amount;
             totalIncome += incomeAmount;
