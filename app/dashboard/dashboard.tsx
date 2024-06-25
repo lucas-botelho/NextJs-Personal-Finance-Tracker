@@ -47,8 +47,6 @@ export default function Dashboard({ userID }: DashboardProps) {
             const snapshot = await getDocs(queryRef);
 
             const responseData: MonthTakeawayCalculation[] = snapshot.docs.map(doc => doc.data() as MonthTakeawayCalculation);
-            console.log("this is responseData fetched from firebase");
-            console.log(responseData)
             setFetchedData(responseData);
         }
 

@@ -1,4 +1,4 @@
-import { QueryFieldFilterConstraint, Timestamp, where } from "firebase/firestore";
+import { QueryFieldFilterConstraint, Timestamp, and, or, where } from "firebase/firestore";
 
 var startDate = new Date();
 startDate.setHours(0, 0, 0, 0);
@@ -39,10 +39,17 @@ export function expenseColumnRecurringWhereClauses(userID: string, category: str
     ];
 }
 
-export function monthlyTakyawayCalculationWhereClauses(userID: string): QueryFieldFilterConstraint[] {
+export function monthlyTakyawayCalculationWhereClauses(userID: string): any[] {
     return [
-        where('userId', '==', userID),
-        where("date", ">=", Timestamp.fromDate(startDate)),
-        where("date", "<=", Timestamp.fromDate(endDate))
+        and(
+            or(
+                where('userId', '==', userID),
+                where("date", ">=", Timestamp.fromDate(startDate)),
+                where("date", "<=", Timestamp.fromDate(endDate))),
+            or(
+                where('userId', '==', userID),
+                where('recurring', '==', true)
+            )
+        )
     ];
 }

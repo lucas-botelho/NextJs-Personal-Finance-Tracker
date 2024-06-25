@@ -37,7 +37,7 @@ class BarChartComponent extends PureComponent<BarChartComponentProps> {
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
-                    <Bar dataKey="pv" fill="#0D1B2A" shape={<Rectangle fill="#0E4021" stroke="#0D1B2A" />} />
+                    <Bar dataKey="pv" fill="#0D1B2A" shape={<Rectangle fill="#0D1B2A" stroke="#0D1B2A" />} />
                 </BarChart>
             </ResponsiveContainer>
         );

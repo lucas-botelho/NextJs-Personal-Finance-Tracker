@@ -16,9 +16,7 @@ export async function POST(request: Request) {
         const whereClauses = monthlyTakyawayCalculationWhereClauses(userId);
 
         const expenseQueryRef = query(expenseRef, ...whereClauses);
-
         const savingsQueryRef = query(savingsRef, ...whereClauses);
-
         const incomeQueryRef = query(incomeRef, ...whereClauses);
 
         const [expenseSnapshot, savingsSnapshot, incomeSnapshot] = await Promise.all([

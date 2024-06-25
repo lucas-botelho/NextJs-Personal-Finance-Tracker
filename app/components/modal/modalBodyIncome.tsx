@@ -51,7 +51,6 @@ const ModalBodyIncome: React.FC<ModalBodyIncomeProps> = ({ userID }) => {
 
     const handleSubmit = async () => {
 
-        console.log(formData);
         const reqBody = new Income(
             formData.amount,
             formData.dueDate,

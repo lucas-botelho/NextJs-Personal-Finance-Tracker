@@ -24,7 +24,6 @@ const SideNav: React.FC<Props> = ({ userID }) => {
                 }
             });
             const data = await response.json();
-            console.log(data);
         } catch (error) {
             console.error('Error during submission:', error);
         }
