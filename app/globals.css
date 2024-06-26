@@ -31,7 +31,7 @@
   }
 
   .main-container-header{
-    @apply flex border-solid pb-1 pl-1 pr-1 mb-6
+    @apply flex border-solid pb-1 pl-1 pr-1 mb-3
   }
 
   .main-container-content{
@@ -75,11 +75,6 @@
     content: ":";
   }
 
-
-  .expense-column .expense-name::after{
-    content: ":";
-  } 
-
   .expense-column .expense-value::after{
     content: " ";
   } 
@@ -107,15 +102,26 @@
     border-radius: 6px;
     padding: 5px 0;
     position: absolute;
-    z-index: 1;
     font-weight: 500;
-    left: 55px;
+    left: 70px;
     top: 15px;
   }
 
   .tooltip:hover .tooltiptext {
     visibility: visible;
   }
+
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 35%;
+    left: 0%;
+    margin-left: -10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #0D1B2A transparent transparent ;
+  }
+  
 
 }
 

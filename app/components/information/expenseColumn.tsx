@@ -68,18 +68,18 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
 
     return (<>
         <div className='expense-column h-auto w-full flex-1 text-center'>
-            <h2 className='text-2xl font-bold mb-2'>{title}</h2>
+            <h2 className='text-2xl font-bold'>{title}</h2>
             <span className='border-solid border-t-2 w-64 m-2'></span>
-            <ul className='space-y-2 w-11/12 mb-2'>
-                <div className='text-left flex p-2 bg-white rounded shadow'>
-                    <span className=' text-gray-800  w-5/12'>Title</span>
-                    <span className='text-gray-600 text-center w-5/12'>Amount</span>
-                    <span className='text-gray-600 text-center w-2/12'>Date</span>
+            <ul className='space-y-2 w-11/12 mb-2 h-full'>
+                <div className='text-left flex p-2 bg-blue-custom-500 rounded shadow text-white '>
+                    <span className='w-5/12'>Title</span>
+                    <span className='text-center w-5/12'>Amount</span>
+                    <span className='text-center w-2/12'>Date</span>
                 </div>
                 {expensesState.expenses.map((expense, index) => {
                     total += expense.amount;
                     return (
-                        <li key={index} className='flex p-2 bg-white rounded shadow'>
+                        <li key={index} className='flex p-2'>
                             <span className='text-left text-gray-800 expense-name w-5/12'>{expense.title}</span>
                             <span className='text-gray-600 expense-value w-5/12'>{expense.amount}  &euro;</span>
                             <span className='text-gray-600 w-2/12'>{formatDate(expense.date)}</span>
@@ -87,7 +87,9 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
                     );
                 })}
             </ul>
-            <div className='font-bold mt-auto self-center bottom-0'>Total: {total.toFixed(2)} &euro;</div>
+            <span className='border-solid border-t-2 w-64 m-2'></span>
+            <div className='font-bold mt-auto self-center'>Total: {total.toFixed(2)} &euro;</div>
+
         </div>
     </>
     );
