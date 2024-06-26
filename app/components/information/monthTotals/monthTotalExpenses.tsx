@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Spinner } from '@chakra-ui/react';
 import { useRecoilState } from 'recoil';
-import { monthExpensesAtomState as monthExpensesAtomState } from '@/app/atoms/monthlyTransactionsAtom';
+import { monthExpensesAtomState, monthIncomeAtomState } from '@/app/atoms/monthlyTransactionsAtom';
 
 interface DisplayProps {
     userID: string;
@@ -10,7 +10,8 @@ interface DisplayProps {
 
 const MonthTotalExpenses: React.FC<DisplayProps> = ({ userID }) => {
 
-    const [monthExpenesesValue, setMonthExpensesValue] = useRecoilState(monthExpensesAtomState)
+    const [expenses, setMonthExpensesValue] = useRecoilState(monthExpensesAtomState)
+    const [income] = useRecoilState(monthIncomeAtomState)
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -30,6 +31,9 @@ const MonthTotalExpenses: React.FC<DisplayProps> = ({ userID }) => {
         })();
     }, []);
 
+    const monthTextColor = expenses.value > (income.value * 0.6) ? 'text-yellow-500'
+        : expenses.value > income.value ? 'text-red-800' : 'text-green-800';
+
     return (
         <div className='cash-display'>
             {isLoading ? (
@@ -48,8 +52,8 @@ const MonthTotalExpenses: React.FC<DisplayProps> = ({ userID }) => {
             ) : (
                 <p>
                     <span className='text-black'>Expenses: </span>
-                    <span className='text-green-800'>
-                        {monthExpenesesValue.value.toFixed(2)} &euro;
+                    <span className={monthTextColor}>
+                        {expenses.value.toFixed(2)} &euro;
                     </span>
                 </p>
             )}

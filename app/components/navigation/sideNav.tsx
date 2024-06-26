@@ -5,6 +5,7 @@ import { GrUpdate } from "react-icons/gr";
 import SidebarIcon from './sidebarIcon';
 import { useSetRecoilState } from 'recoil';
 import { transactionModalState } from '@/app/atoms/transactionModalAtom';
+import ToolTip from '../information/tooltip';
 
 
 interface Props {
@@ -32,21 +33,35 @@ const SideNav: React.FC<Props> = ({ userID }) => {
 
     return <>
         <div className='sideNav'>
-            <div onClick={() => setIncomeModalState({ open: true, view: 'income' })}>
-                <SidebarIcon isPositive={true} icon={<FaCircleDollarToSlot size={28} />} />
-            </div>
-            <div onClick={() => setIncomeModalState({ open: true, view: 'expense' })}>
-                <SidebarIcon isPositive={false} icon={<FaHandHoldingDollar size={28} />} />
-            </div>
-            <div onClick={() => setIncomeModalState({ open: true, view: 'savingIn' })}>
-                <SidebarIcon isPositive={true} icon={<GiPiggyBank size={28} />} />
-            </div>
-            <div onClick={() => setIncomeModalState({ open: true, view: 'savingOut' })}>
-                <SidebarIcon isPositive={false} icon={<GiPiggyBank size={28} />} />
-            </div>
-            <div onClick={updateUserMonthTakeAway}>
-                <SidebarIcon isPositive={true} icon={<GrUpdate className='hover:animate-spin-slow' size={28} />} />
-            </div>
+            <ToolTip text='Add Income'>
+                <div onClick={() => setIncomeModalState({ open: true, view: 'income' })}>
+                    <SidebarIcon isPositive={true} icon={<FaCircleDollarToSlot size={28} />} />
+                </div>
+            </ToolTip>
+
+            <ToolTip text='Add Expense'>
+                <div onClick={() => setIncomeModalState({ open: true, view: 'expense' })}>
+                    <SidebarIcon isPositive={false} icon={<FaHandHoldingDollar size={28} />} />
+                </div>
+            </ToolTip>
+
+            <ToolTip text='Savings In'>
+                <div onClick={() => setIncomeModalState({ open: true, view: 'savingIn' })}>
+                    <SidebarIcon isPositive={true} icon={<GiPiggyBank size={28} />} />
+                </div>
+            </ToolTip>
+
+            <ToolTip text='Savings Out'>
+                <div onClick={() => setIncomeModalState({ open: true, view: 'savingOut' })}>
+                    <SidebarIcon isPositive={false} icon={<GiPiggyBank size={28} />} />
+                </div>
+            </ToolTip>
+
+            <ToolTip text='Update Charts'>
+                <div onClick={updateUserMonthTakeAway}>
+                    <SidebarIcon isPositive={true} icon={<GrUpdate className='hover:animate-spin-slow' size={28} />} />
+                </div>
+            </ToolTip>
         </div>
     </>
 };

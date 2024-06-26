@@ -1,6 +1,6 @@
 'use client';
 import ExpenseColumn from "../components/information/expenseColumn";
-import BarChartCard from "../components/information/barChartCard";
+import BarChartContainer from "../components/information/barChartContainer";
 import { necessaryExpensesAtomState, needsExpensesAtomState, wantsExpensesAtomState } from "../atoms/expenseListAtom";
 import { use, useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -86,9 +86,9 @@ export default function Dashboard({ userID }: DashboardProps) {
                 <ExpenseColumn title="Wants" userID={userID} atom={wantsExpensesAtomState} />
             </div>
             <div className='card-container'>
-                <BarChartCard data={income} title="Earning" />
-                <BarChartCard data={expenses} title="Expenses" />
-                <BarChartCard data={savings} title="Savings" />
+                <BarChartContainer data={income} title="Earning" />
+                <BarChartContainer data={expenses} title="Expenses" />
+                <BarChartContainer data={savings} title="Savings" />
             </div>
         </>);
 }

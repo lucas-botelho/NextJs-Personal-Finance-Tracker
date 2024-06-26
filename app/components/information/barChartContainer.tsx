@@ -1,5 +1,5 @@
 import React from 'react';
-import BarChartComponent from './barChartComponentGreen';
+import BarChartComponent from './barChartComponent';
 import { PiEmptyLight } from "react-icons/pi";
 
 interface ExpenseColumnProps {
@@ -11,7 +11,7 @@ interface ExpenseColumnProps {
     }[];
 }
 
-const BarChartCard: React.FC<ExpenseColumnProps> = ({ title, data }) => {
+const BarChartContainer: React.FC<ExpenseColumnProps> = ({ title, data }) => {
     return (
         <div className='expense-column h-full w-full md:mb-5'>
             <h2 className='text-2xl font-bold mb-2'>{title}</h2>
@@ -28,4 +28,4 @@ const BarChartCard: React.FC<ExpenseColumnProps> = ({ title, data }) => {
     );
 };
 
-export default BarChartCard;
+export default BarChartContainer;

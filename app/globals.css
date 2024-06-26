@@ -90,4 +90,32 @@
   .card-container{
     @apply flex flex-col border-solid pb-1 pl-1 pr-1 md:flex-row h-full
   }
+
+
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+  }
+
+  .tooltip .tooltiptext{
+    visibility: hidden;
+    width: 120px;
+    background-color: #0D1B2A;
+    color: #e0e1dd;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    font-weight: 500;
+    left: 55px;
+    top: 15px;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
 }
+
