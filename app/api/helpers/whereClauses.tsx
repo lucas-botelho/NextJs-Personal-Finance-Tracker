@@ -1,9 +1,13 @@
 import { QueryFieldFilterConstraint, Timestamp, and, or, where } from "firebase/firestore";
+import { start } from "repl";
 
 var startDate = new Date();
 startDate.setHours(0, 0, 0, 0);
 startDate.setDate(25);
-var endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 25);
+startDate.setMonth(startDate.getMonth() - 1);
+var endDate = new Date();
+endDate.setHours(0, 0, 0, 0);
+endDate.setDate(25);
 
 export function monthlyStatusWhereClauses(userID: string): QueryFieldFilterConstraint[] {
     return [
@@ -45,7 +49,9 @@ export function monthlyTakyawayCalculationWhereClauses(userID: string): any[] {
             or(
                 where('userId', '==', userID),
                 where("date", ">=", Timestamp.fromDate(startDate)),
-                where("date", "<=", Timestamp.fromDate(endDate))),
+                where("date", "<=", Timestamp.fromDate(endDate)),
+                where('recurring', '==', false)
+            ),
             or(
                 where('userId', '==', userID),
                 where('recurring', '==', true)
