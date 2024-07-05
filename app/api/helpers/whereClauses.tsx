@@ -43,19 +43,18 @@ export function expenseColumnRecurringWhereClauses(userID: string, category: str
     ];
 }
 
-export function monthlyTakyawayCalculationWhereClauses(userID: string): any[] {
+export function monthlyTakyawayNonRecurringWhereClauses(userID: string): any[] {
     return [
-        and(
-            or(
-                where('userId', '==', userID),
-                where("date", ">=", Timestamp.fromDate(startDate)),
-                where("date", "<=", Timestamp.fromDate(endDate)),
-                where('recurring', '==', false)
-            ),
-            or(
-                where('userId', '==', userID),
-                where('recurring', '==', true)
-            )
-        )
+        where('userId', '==', userID),
+        where('recurring', '==', false),
+        where('date', '>=', Timestamp.fromDate(startDate)),
+        where('date', '<=', Timestamp.fromDate(endDate))
+    ];
+}
+
+export function monthlyTakyawayRecurringWhereClauses(userID: string): any[] {
+    return [
+        where('userId', '==', userID),
+        where('recurring', '==', true),
     ];
 }
