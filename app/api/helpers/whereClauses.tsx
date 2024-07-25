@@ -2,9 +2,9 @@ import { QueryFieldFilterConstraint, Timestamp, and, or, where } from "firebase/
 import { start } from "repl";
 
 var startDate = new Date();
+if (startDate.getDate() < 25) startDate.setMonth(startDate.getMonth() - 1);
 startDate.setHours(0, 0, 0, 0);
 startDate.setDate(25);
-startDate.setMonth(startDate.getMonth() - 1);
 var endDate = new Date();
 endDate.setHours(23, 59, 0, 0);
 endDate.setDate(24);
