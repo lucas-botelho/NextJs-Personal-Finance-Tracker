@@ -6,7 +6,7 @@ startDate.setHours(0, 0, 0, 0);
 startDate.setDate(25);
 startDate.setMonth(startDate.getMonth() - 1);
 var endDate = new Date();
-endDate.setHours(0, 0, 0, 0);
+endDate.setHours(23, 59, 0, 0);
 endDate.setDate(24);
 
 export function monthlyStatusWhereClauses(userID: string): QueryFieldFilterConstraint[] {
