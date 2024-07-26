@@ -14,9 +14,11 @@ const Login: React.FC<LoginProps> = () => {
         await signInWithGoogle()
             .then(() => {
                 if (user)
-                    router.push(`/`);
+                    console.log(user);
+                router.push(`/`);
             })
             .catch((error) => {
+                console.error(error);
             });
     };
 
@@ -27,6 +29,8 @@ const Login: React.FC<LoginProps> = () => {
                 <button onClick={handleSignInWithGoogle} className="m-auto bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
                     Sign in with Google
                 </button>
+                {loading && <div>Loading...</div>}
+                {error && <div>Error: {error.message}</div>}
             </div>
         </div>
     );
