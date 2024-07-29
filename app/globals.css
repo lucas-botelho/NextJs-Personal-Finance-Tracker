@@ -125,5 +125,13 @@
   .kebab-menu-expenses:hover{
     @apply border-solid border-gray-100 border-2 rounded-md bg-white cursor-pointer mr-1
   }
+
+  .kebab-menu-expenses-content{
+    @apply z-10  absolute bg-white shadow-lg  w-28 border-2 border-gray-100 rounded-md
+  }
+
+  .kebab-menu-expenses-content > *{
+    @apply w-full border-solid border-b-2 border-gray-100 p-1
+  } 
 }
 

@@ -87,14 +87,15 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
                         .sort((a, b) => a.date.toDate().getTime() - b.date.toDate().getTime())
                         .map((expense, index) => {
                             total += expense.amount;
+                            console.log(expense.id);
                             return (
                                 <li key={index} className='flex p-2'>
-                                    <div className='p-1 mr-2 kebab-menu-expenses relative' onClick={() => toggleMenu(index)} >
+                                    <div className='p-1 mx-2kebab-menu-expenses relative' onClick={() => toggleMenu(index)} >
                                         <CiMenuKebab size={12} style={{ color: "gray" }} />
                                         {openMenuIndex === index && (
-                                            <div className='kebab-menu-expenses-content absolute bg-white shadow-lg rounded p-2'>
-                                                <div className='block'>Edit</div>
-                                                <div className='block'>Delete</div>
+                                            <div className='kebab-menu-expenses-content'>
+                                                <div className='block '>Edit</div>
+                                                <div className='block border-b-0'>Delete</div>
                                             </div>
                                         )}
                                     </div>
