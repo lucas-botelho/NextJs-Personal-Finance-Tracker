@@ -122,6 +122,8 @@
     border-color: transparent #0D1B2A transparent transparent ;
   }
   
-
+  .kebab-menu-expenses:hover{
+    @apply border-solid border-gray-100 border-2 rounded-md bg-white cursor-pointer mr-1
+  }
 }
 
