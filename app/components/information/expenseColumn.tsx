@@ -80,6 +80,14 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
         }
     }
 
+    const handleDelete = (id: string) => {
+
+        const isConfirmed = confirm("re you sure you want to delete this item ?")
+        if (isConfirmed) {
+            deleteExpense(id);
+        }
+    }
+
 
     useEffect(() => {
         fetchExpenses();
@@ -102,12 +110,11 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
                         .sort((a, b) => a.date.toDate().getTime() - b.date.toDate().getTime())
                         .map((expense, index) => {
                             total += expense.amount;
-                            console.log(expense.id);
                             return (
                                 <li id={expense.id} className='flex p-2'>
                                     <span className='flex flex-row mr-2' >
                                         <MdEdit size={22} className='column-btn' />
-                                        <MdDelete size={22} className='column-btn' onClick={() => deleteExpense(expense.id)} />
+                                        <MdDelete size={22} className='column-btn' onClick={() => handleDelete(expense.id)} />
                                     </span>
                                     <span className='text-left text-gray-800 expense-name w-5/12'>{expense.title}</span>
                                     <span className='text-gray-600 expense-value w-4/12'>{expense.amount}  &euro;</span>
