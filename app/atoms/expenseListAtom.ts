@@ -9,7 +9,7 @@ export type Expense = {
     title: string;
     userId: string;
     category: string;
-
+    id: string;
 }
 
 export interface ExpenseState {

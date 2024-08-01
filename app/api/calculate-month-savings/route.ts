@@ -1,6 +1,7 @@
 import { firestore } from "@/firebase/clientApp";
-import { query, collection, where, getDocs, and, or } from "firebase/firestore";
+import { query, collection, getDocs } from "firebase/firestore";
 import { monthlyStatusWhereClauses } from "../helpers/whereClauses";
+
 
 export async function POST(request: Request) {
     try {

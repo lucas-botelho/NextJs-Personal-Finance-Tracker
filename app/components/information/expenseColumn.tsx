@@ -1,10 +1,10 @@
 import { expenseColumnRecurringWhereClauses, expenseColumnWhereClauses } from '@/app/api/helpers/whereClauses';
 import { Expense, ExpenseState } from '@/app/atoms/expenseListAtom';
 import { firestore } from '@/firebase/clientApp';
-import { collection, query, where, getDocs, Timestamp, or, and } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
+import { collection, query, getDocs, Timestamp } from 'firebase/firestore';
+import React, { useEffect } from 'react';
 import { RecoilState, useRecoilState } from 'recoil';
-import { CiMenuKebab } from "react-icons/ci";
+import { MdEdit, MdDelete } from "react-icons/md";
 
 
 interface ExpenseColumnProps {
@@ -16,10 +16,7 @@ interface ExpenseColumnProps {
 const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) => {
     let total = 0;
     const [expensesState, setExpensesState] = useRecoilState(atom)
-    const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
-    const toggleMenu = (index: number) => {
-        setOpenMenuIndex(openMenuIndex === index ? null : index);
-    };
+    const [expensesModalState, setExpensesModalState] = useRecoilState(atom)
 
     const formatDate = (timestamp: Timestamp) => {
         const date = new Date(timestamp.seconds * 1000);
@@ -42,10 +39,12 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
             const [snapshot, snapshotRecurring] = await Promise.all([getDocs(queryRef), getDocs(queryRefRecurring)]);
 
             const data = snapshot.docs.map((doc) => ({
+                id: doc.id,
                 ...doc.data()
             })) as Expense[];
 
             const dataRecurring = snapshotRecurring.docs.map((doc) => ({
+                id: doc.id,
                 ...doc.data()
             })) as Expense[];
 
@@ -67,6 +66,21 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
         }
     }
 
+    const deleteExpense = async (id: string) => {
+        const response = await fetch('/api/delete-document', {
+            method: 'POST',
+            body: JSON.stringify({ id }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            fetchExpenses();
+        }
+    }
+
+
     useEffect(() => {
         fetchExpenses();
     }, []);
@@ -77,8 +91,9 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
             <span className='border-solid border-t-2 w-64 m-2'></span>
             <ul className=' w-11/12 mb-2 h-full'>
                 <div className='text-left flex p-2 bg-blue-custom-500 rounded shadow text-white '>
-                    <span className='w-5/12'>Title</span>
-                    <span className='text-center w-5/12'>Amount</span>
+                    <span className='w-1/12 mr-2'></span>
+                    <span className='w-4/12'>Title</span>
+                    <span className='text-center w-4/12'>Amount</span>
                     <span className='text-center w-2/12'>Date</span>
                 </div>
                 {expensesState.expenses &&
@@ -89,18 +104,13 @@ const ExpenseColumn: React.FC<ExpenseColumnProps> = ({ title, userID, atom }) =>
                             total += expense.amount;
                             console.log(expense.id);
                             return (
-                                <li key={index} className='flex p-2'>
-                                    <div className='p-1 mx-2kebab-menu-expenses relative' onClick={() => toggleMenu(index)} >
-                                        <CiMenuKebab size={12} style={{ color: "gray" }} />
-                                        {openMenuIndex === index && (
-                                            <div className='kebab-menu-expenses-content'>
-                                                <div className='block '>Edit</div>
-                                                <div className='block border-b-0'>Delete</div>
-                                            </div>
-                                        )}
-                                    </div>
+                                <li id={expense.id} className='flex p-2'>
+                                    <span className='flex flex-row mr-2' >
+                                        <MdEdit size={22} className='column-btn' />
+                                        <MdDelete size={22} className='column-btn' onClick={() => deleteExpense(expense.id)} />
+                                    </span>
                                     <span className='text-left text-gray-800 expense-name w-5/12'>{expense.title}</span>
-                                    <span className='text-gray-600 expense-value w-5/12'>{expense.amount}  &euro;</span>
+                                    <span className='text-gray-600 expense-value w-4/12'>{expense.amount}  &euro;</span>
                                     <span className='text-gray-600 w-2/12'>{formatDate(expense.date)}</span>
                                 </li>
                             );

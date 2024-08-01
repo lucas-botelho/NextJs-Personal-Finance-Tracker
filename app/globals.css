@@ -119,10 +119,10 @@
     margin-left: -10px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent #0D1B2A transparent transparent ;
+    border-color: transparent #0D1B2A;
   }
   
-  .kebab-menu-expenses:hover{
+  /* .kebab-menu-expenses:hover{
     @apply border-solid border-gray-100 border-2 rounded-md bg-white cursor-pointer mr-1
   }
 
@@ -132,6 +132,11 @@
 
   .kebab-menu-expenses-content > *{
     @apply w-full border-solid border-b-2 border-gray-100 p-1
-  } 
+  }  */
+
+
+  .column-btn{
+    @apply rounded-sm mr-2 fill-blue-custom-500 hover:bg-gray-custom-100
+  }
 }
 
