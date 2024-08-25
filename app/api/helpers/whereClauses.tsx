@@ -1,5 +1,4 @@
 import { QueryFieldFilterConstraint, Timestamp, and, or, where } from "firebase/firestore";
-import { start } from "repl";
 
 var startDate = new Date();
 if (startDate.getDate() < 25) startDate.setMonth(startDate.getMonth() - 1);

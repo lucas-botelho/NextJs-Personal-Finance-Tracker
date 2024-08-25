@@ -5,7 +5,6 @@ import { monthlyTakyawayNonRecurringWhereClauses, monthlyTakyawayRecurringWhereC
 export async function POST(request: Request) {
     try {
         const { userId } = await request.json();
-        const currentDate = new Date();
         const expenseRef = collection(firestore, 'Expense');
         const savingsRef = collection(firestore, 'Saving');
         const incomeRef = collection(firestore, 'Income');
@@ -44,10 +43,12 @@ export async function POST(request: Request) {
         const savingsTotal = allSavingsDocs.reduce((total, doc) => total + doc.data().amount, 0);
         const incomeTotal = allIncomeDocs.reduce((total, doc) => total + doc.data().amount, 0);
 
-        const docRef = doc(firestore, 'MonthTakeawayCalculation', `${userId}_${currentDate.getFullYear()}_${currentDate.getMonth()}`);
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth() + 1;
+        const docRef = doc(firestore, 'MonthTakeawayCalculation', `${userId}_${currentDate.getFullYear()}_${currentMonth}`);
         await setDoc(docRef, {
             userId: userId,
-            month: currentDate.getMonth(),
+            month: currentMonth,
             year: currentDate.getFullYear(),
             savings: savingsTotal,
             expenses: expenseTotal,
