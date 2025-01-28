@@ -1,36 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# **Personal Finance Tracker**
 
-## Getting Started
+A simple and intuitive personal finance tracker application built with **Next.js** and styled using **Tailwind CSS**. This project serves as a hands-on exploration of modern web development technologies, focusing on learning and experimenting with **Next.js**'s SSR capabilities and **Tailwind CSS** for responsive and efficient UI design.
 
-First, run the development server:
+## **Features**
+- **Expense Tracking**: Add, edit, and delete expense entries to keep track of your spending habits.
+- **Income Tracking**: Log income entries to monitor your earnings.
+- **Responsive Design**: Optimized for both desktop and mobile devices using Tailwind CSS.
+- **Real-Time Updates**: Dynamic updates for smooth user interactions without page reloads.
+- **Clean UI**: Simple and user-friendly interface to focus on core functionalities.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## **Technologies Used**
+- **Next.js**: Framework for building server-rendered React applications.
+- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
+- **JavaScript**: Core programming language for logic and interactions.
+- **Node.js**: Backend runtime for development purposes.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## **Project Goals**
+Learn and implement Next.js for server-side rendering and routing.
+Experiment with Tailwind CSS to build responsive layouts.
+Gain hands-on experience with modern front-end technologies.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project is a personal learning exercise, but contributions and suggestions are welcome! Feel free to fork the repository and submit a pull request.
